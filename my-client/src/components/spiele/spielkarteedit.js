@@ -3,7 +3,7 @@ import {saveSpiel} from '../../services/SpieleService.js';
 import {deleteSpiel} from '../../services/SpieleService.js';
 import {updateSpiel} from '../../services/SpieleService.js';
 
-import { Image, ButtonToolbar, ButtonGroup, Button, FormGroup, FormControl} from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Col, ControlLabel} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faUserFriends, faClock, faSave, faUndo} from '@fortawesome/free-solid-svg-icons'
@@ -73,7 +73,7 @@ export default class SpielKarteEdit extends Component {
 
     return(
       <React.Fragment>
-      <div className="spiel-card-neu">
+      <div className="spiel-card-edit">
           <div className="card">
             <Image className="card-img-top"
               src={"../images/spiel_" + this.state.aktuellesSpiel.id + ".jpg"}
@@ -82,34 +82,60 @@ export default class SpielKarteEdit extends Component {
                 e.target.src="../images/spiel_0.jpg"
               }} responsive />
               <div className="spiel-card-body card-body ">
-                <form>
+                <Form inline>
                   <FormGroup>
-                    <FormControl
-                      type="text"
-                      placeholder="Titel"
-                      value={this.state.aktuellesSpiel.titel}
-                      onChange={e => this.handleChange(e,"titel")}
-                    />
-                    <FormControl
-                      type="text"
-                      placeholder="Autor"
-                      value={this.state.aktuellesSpiel.autor}
-                      onChange={e => this.handleChange(e,"autor")}
-                    />
-                    <FormControl
-                      type="text"
-                      placeholder="Mitspieler"
-                      value={this.state.aktuellesSpiel.mitspieler}
-                      onChange={e => this.handleChange(e,"mitspieler")}
-                    />
-                    <FormControl
-                      type="text"
-                      placeholder="Dauer"
-                      value={this.state.aktuellesSpiel.dauer}
-                      onChange={e => this.handleChange(e,"dauer")}
-                    />
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Titel
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl
+                        type="text"
+                        placeholder="Titel"
+                        value={this.state.aktuellesSpiel.titel}
+                        onChange={e => this.handleChange(e,"titel")}
+                      />
+                    </Col>
                   </FormGroup>
-                </form>
+                  <FormGroup>
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Autor
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl
+                        type="text"
+                        placeholder="Autor"
+                        value={this.state.aktuellesSpiel.autor}
+                        onChange={e => this.handleChange(e,"autor")}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup>
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Mitspieler
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl
+                        type="text"
+                        placeholder="Mitspieler"
+                        value={this.state.aktuellesSpiel.mitspieler}
+                        onChange={e => this.handleChange(e,"mitspieler")}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup>
+                    <Col componentClass={ControlLabel} sm={2}>
+                      Dauer
+                    </Col>
+                    <Col sm={10}>
+                      <FormControl
+                        type="text"
+                        placeholder="Dauer"
+                        value={this.state.aktuellesSpiel.dauer}
+                        onChange={e => this.handleChange(e,"dauer")}
+                      />
+                    </Col>
+                  </FormGroup>
+                </Form>
               </div>
               <div>
                 <ButtonToolbar className="float-right">
