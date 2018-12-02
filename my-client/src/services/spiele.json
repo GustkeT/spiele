@@ -1,0 +1,8 @@
+    {
+        "id": 100,
+        "titel": "Neuer Titel",
+        "autor": "Autor",
+        "dauer": 20,
+        "mitspieler": 20,
+        "rating": 2.0
+    }

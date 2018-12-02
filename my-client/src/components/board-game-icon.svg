@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 95 67" style="enable-background:new 0 0 95 67;" xml:space="preserve">
+<style type="text/css">
+	.st0{filter:url(#Adobe_OpacityMaskFilter);}
+	.st1{fill:#FFFFFF;}
+	.st2{mask:url(#mask-2_1_);fill:#A72A2B;}
+	.st3{filter:url(#Adobe_OpacityMaskFilter_1_);}
+	.st4{mask:url(#mask-4_1_);fill:#A72A2B;}
+</style>
+<title>BOARD GAMES</title>
+<desc>Created with Sketch.</desc>
+<g id="Home-Page-Desktop" transform="translate(-1101.000000, -1248.000000)">
+	<g id="About" transform="translate(421.000000, 712.000000)">
+		<g id="Hobbies" transform="translate(510.000000, 319.000000)">
+			<g id="Icons" transform="translate(0.000000, 68.000000)">
+				<g id="board-games" transform="translate(170.000000, 149.000000)">
+					<g id="BOARD-GAMES">
+						<g id="Group-3" transform="translate(38.000000, 11.000000)">
+							<g id="Clip-2">
+							</g>
+							<defs>
+								<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="0.7" y="0.1" width="56.3" height="55.9">
+									<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+								</filter>
+							</defs>
+							<mask maskUnits="userSpaceOnUse" x="0.7" y="0.1" width="56.3" height="55.9" id="mask-2_1_">
+								<g class="st0">
+									<polygon id="path-1_1_" class="st1" points="0.7,0.1 57,0.1 57,56 0.7,56 									"/>
+								</g>
+							</mask>
+							<path id="Fill-1" class="st2" d="M37.9,49.1c-3.5,0.5-6.8-1.9-7.3-5.4c-0.5-3.5,1.9-6.7,5.4-7.2c3.5-0.5,6.8,1.9,7.3,5.4
+								C43.8,45.3,41.4,48.6,37.9,49.1 M22.4,29c-0.5-3.5,1.9-6.7,5.4-7.2c3.5-0.5,6.8,1.9,7.3,5.4c0.5,3.5-1.9,6.7-5.4,7.3
+								C26.2,34.8,22.9,32.4,22.4,29 M14.1,14c-0.5-3.5,1.9-6.7,5.4-7.2c3.5-0.5,6.8,1.9,7.3,5.4c0.5,3.5-1.9,6.7-5.4,7.2
+								C17.9,19.9,14.6,17.5,14.1,14 M53,10L17.2,0.3c-2.8-0.8-5.7,0.9-6.5,3.7L0.9,39.7c-0.8,2.8,0.9,5.7,3.7,6.5l35.9,9.7
+								c2.8,0.8,5.7-0.9,6.5-3.7l9.8-35.6C57.5,13.7,55.9,10.8,53,10"/>
+						</g>
+						<g id="Group-6">
+							<g id="Clip-5">
+							</g>
+							<defs>
+								<filter id="Adobe_OpacityMaskFilter_1_" filterUnits="userSpaceOnUse" x="0" y="0.6" width="45.3" height="62.4">
+									<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+								</filter>
+							</defs>
+							<mask maskUnits="userSpaceOnUse" x="0" y="0.6" width="45.3" height="62.4" id="mask-4_1_">
+								<g class="st3">
+									<polygon id="path-3_1_" class="st1" points="0,0.6 45.3,0.6 45.3,63 0,63 									"/>
+								</g>
+							</mask>
+							<path id="Fill-4" class="st4" d="M33,9.4c3.2-0.5,6.1,1.7,6.6,5c0.5,3.2-1.7,6.2-4.9,6.7c-3.2,0.5-6.1-1.7-6.6-5
+								C27.6,12.9,29.8,9.9,33,9.4z M27.9,54.4c-3.2,0.5-6.1-1.7-6.6-5c-0.5-3.2,1.7-6.2,4.9-6.7c3.2-0.5,6.1,1.7,6.6,5
+								C33.2,50.9,31,53.9,27.9,54.4z M14.8,34.5c-3.2,0.5-6.1-1.7-6.6-5c-0.5-3.2,1.7-6.2,4.9-6.7c3.2-0.5,6.1,1.7,6.6,5
+								C20.2,31,18,34,14.8,34.5z M45.3,11.1L40,3c-1.6-2.4-4.9-3.1-7.2-1.5L2.3,22.2c-2.4,1.6-3,4.9-1.4,7.4l20.4,31
+								c1.6,2.4,4.9,3.1,7.2,1.5l6.2-4.2c-1.8-3.5-0.6-6.4-0.6-6.4L45.3,11.1z"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>
