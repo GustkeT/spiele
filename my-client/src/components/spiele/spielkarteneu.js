@@ -4,8 +4,8 @@ import {saveSpiel} from '../../services/SpieleService.js';
 import { Image, ButtonToolbar, ButtonGroup, Button, FormGroup, FormControl} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faUserFriends, faClock, faBan, faSave } from '@fortawesome/free-solid-svg-icons'
-library.add(faEdit, faTrash, faUserFriends, faClock, faBan, faSave)
+import { faEdit, faTrash, faUserFriends, faClock, faUndo, faSave } from '@fortawesome/free-solid-svg-icons'
+library.add(faEdit, faTrash, faUserFriends, faClock, faUndo, faSave)
 
 
 export default class SpielKarteNeu extends Component {
@@ -102,7 +102,7 @@ export default class SpielKarteNeu extends Component {
                 <ButtonToolbar className="float-right">
                   <ButtonGroup>
                     <Button onClick={this.handleCancel}>
-                      <FontAwesomeIcon icon="ban" />
+                      <FontAwesomeIcon icon="undo" />
                     </Button>
                     <Button onClick={this.handleSave}>
                       <FontAwesomeIcon icon="save" />

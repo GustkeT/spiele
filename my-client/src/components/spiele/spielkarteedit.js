@@ -6,8 +6,8 @@ import {updateSpiel} from '../../services/SpieleService.js';
 import { Image, ButtonToolbar, ButtonGroup, Button, FormGroup, FormControl} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faUserFriends, faClock, faBan, faSave} from '@fortawesome/free-solid-svg-icons'
-library.add(faEdit, faTrash, faUserFriends, faClock, faBan, faSave)
+import { faEdit, faTrash, faUserFriends, faClock, faSave, faUndo} from '@fortawesome/free-solid-svg-icons'
+library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo)
 
 export default class SpielKarteEdit extends Component {
 
@@ -76,7 +76,11 @@ export default class SpielKarteEdit extends Component {
       <div className="spiel-card-neu">
           <div className="card">
             <Image className="card-img-top"
-              src={"../images/spiel_0.jpg"} responsive />
+              src={"../images/spiel_" + this.state.aktuellesSpiel.id + ".jpg"}
+              onError={(e)=>{
+                e.target.onerror = null;
+                e.target.src="../images/spiel_0.jpg"
+              }} responsive />
               <div className="spiel-card-body card-body ">
                 <form>
                   <FormGroup>
@@ -114,7 +118,7 @@ export default class SpielKarteEdit extends Component {
                       <FontAwesomeIcon icon="trash" />
                     </Button>
                     <Button onClick={this.handleCancel}>
-                      <FontAwesomeIcon icon="ban" />
+                      <FontAwesomeIcon icon="undo" />
                     </Button>
                     <Button disabled={JSON.stringify(this.state.originalSpiel) == JSON.stringify(this.state.aktuellesSpiel)} onClick={this.handleUpdate}>
                       <FontAwesomeIcon icon="save" />
