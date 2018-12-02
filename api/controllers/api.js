@@ -151,6 +151,7 @@ router.delete('/spiele/:id', async(req, res) => {
 // Hilfsfunktion zum Validieren des req.body
 function validateSpiel(spiel){
   const schema = {
+    id : Joi.string(),
     titel : Joi.string().required(),
     jahr : Joi.number().integer().min(1900).max(2100),
     mitspieler : Joi.number().integer().min(1),
