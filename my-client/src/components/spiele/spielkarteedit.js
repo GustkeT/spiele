@@ -51,7 +51,6 @@ export default class SpielKarteEdit extends Component {
   handleCancel(e){
     //Reset state
     this.state.aktuellesSpiel = this.state.originalSpiel;
-
     this.props.hideModal();
   }
 
