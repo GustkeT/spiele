@@ -15,7 +15,7 @@ export default class SpielKarteNeu extends Component {
       this.state = {
         neuesSpiel: {
           titel: '',
-          autor: '',
+          autor: 'Rudi Hoffmann',
           mitspieler: '',
           dauer: ''
         },
@@ -28,14 +28,22 @@ export default class SpielKarteNeu extends Component {
   }
 
   handleSave(e){
+    //neues Spiel speichern in der DB
     saveSpiel(this.state.neuesSpiel);
+
+    //kopiere neuesSpiel in lokaler Variable
+    var tempSpiel = this.state.neuesSpiel;
+    //neuesSpiel in der Liste anhängen
+    this.props.attachSpiel(tempSpiel);
+
+    //SpielKarteNeu wieder schließen
     this.props.hideModal();
   }
 
   handleCancel(e){
     //Reset state
     this.state.neuesSpiel.titel = '';
-    this.state.neuesSpiel.autor = '';
+    this.state.neuesSpiel.autor = 'Rudi Hoffmann';
     this.state.neuesSpiel.mitspieler = '';
     this.state.neuesSpiel.dauer = '';
 
@@ -59,9 +67,8 @@ export default class SpielKarteNeu extends Component {
   }
 
   render() {
-
     return(
-      <React.Fragment>
+      <React.Fragment>      
       <div className="spiel-card-neu">
           <div className="card">
             <Image className="card-img-top"

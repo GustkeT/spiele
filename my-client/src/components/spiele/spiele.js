@@ -49,6 +49,15 @@ export default class Spiele extends Component {
     this.setState({ show: false });
   }
 
+  attachSpiel = (neuesSpiel) => {
+    this.setState(({spiele}) => ({spiele: [...spiele, neuesSpiel]}));
+  }
+
+  removeSpiel = (spielToRemove) => {
+    let filteredArray = this.state.spiele.filter(item => item != spielToRemove)
+    this.setState({spiele: filteredArray});
+  }
+
   render() {
     const { isLoading, error } = this.state;
 
@@ -62,8 +71,8 @@ export default class Spiele extends Component {
               <div className="d-flex flex-row">
                   <div className="col-sm-12">
                       {console.log('spiele: render start' + this.state.spiele)}
-                      <Modal show={this.state.show}> <SpielKarteNeu hideModal={this.hideModal}/></Modal>
-                      <Spielliste spiele={this.state.spiele} />
+                      <Modal show={this.state.show}> <SpielKarteNeu attachSpiel={this.attachSpiel} hideModal={this.hideModal}/></Modal>
+                      <Spielliste removeSpiel={this.removeSpiel} spiele={this.state.spiele} />
                       {console.log('spiele: render end' + this.state.spiele)}
                   </div>
               </div>

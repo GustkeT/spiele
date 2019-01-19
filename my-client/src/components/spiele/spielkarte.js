@@ -62,7 +62,6 @@ export default class SpielKarte extends Component {
                     </div>
                   </div>
                 </div>
-
             </div>
         </div>
       );
