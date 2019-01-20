@@ -15,13 +15,13 @@ export function fetchSpiele() {
 
 export function saveSpiel(props) {
   return fetch('/api/spiele', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(props)
-});
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(props)
+  });
 }
 
 export function updateSpiel(props) {

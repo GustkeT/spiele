@@ -49,8 +49,22 @@ export default class Spiele extends Component {
     this.setState({ show: false });
   }
 
-  attachSpiel = (neuesSpiel) => {
-    this.setState(({spiele}) => ({spiele: [...spiele, neuesSpiel]}));
+  attachSpiel = (neuesSpiel, neuesSpielId) => {
+    var tempSpiel= {
+      id: 0,
+      titel: '',
+      autor: '',
+      mitspieler: '',
+      dauer: ''
+    };
+
+    tempSpiel.id = neuesSpielId;
+    tempSpiel.titel = neuesSpiel.titel;
+    tempSpiel.autor = neuesSpiel.autor;
+    tempSpiel.mitspieler = neuesSpiel.mitspieler;
+    tempSpiel.dauer = neuesSpiel.dauer;
+
+    this.setState(({spiele}) => ({spiele: [...spiele, tempSpiel]}));
   }
 
   removeSpiel = (spielToRemove) => {

@@ -14,20 +14,20 @@ export default class SpielKarteEdit extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        spiele: {},
+        spiel: {},
         aktuellesSpiel: {
-          id: this.props.spiele.id,
-          titel: this.props.spiele.titel,
-          autor: this.props.spiele.autor,
-          mitspieler: this.props.spiele.mitspieler,
-          dauer: this.props.spiele.dauer
+          id: this.props.spiel.id,
+          titel: this.props.spiel.titel,
+          autor: this.props.spiel.autor,
+          mitspieler: this.props.spiel.mitspieler,
+          dauer: this.props.spiel.dauer
         },
         originalSpiel: {
-          id: this.props.spiele.id,
-          titel: this.props.spiele.titel,
-          autor: this.props.spiele.autor,
-          mitspieler: this.props.spiele.mitspieler,
-          dauer: this.props.spiele.dauer
+          id: this.props.spiel.id,
+          titel: this.props.spiel.titel,
+          autor: this.props.spiel.autor,
+          mitspieler: this.props.spiel.mitspieler,
+          dauer: this.props.spiel.dauer
         },
       };
 

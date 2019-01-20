@@ -29,12 +29,15 @@ export default class SpielKarteNeu extends Component {
 
   handleSave(e){
     //neues Spiel speichern in der DB
-    saveSpiel(this.state.neuesSpiel);
+    var neuesSpielId = saveSpiel(this.state.neuesSpiel);
+    console.log(neuesSpielId);
+
+    //TBD: wir vermuten, dass neuesSpielId die ID ist aber wir bekommen undefined (promisse)
 
     //kopiere neuesSpiel in lokaler Variable
     var tempSpiel = this.state.neuesSpiel;
     //neuesSpiel in der Liste anhängen
-    this.props.attachSpiel(tempSpiel);
+    this.props.attachSpiel(tempSpiel, neuesSpielId);
 
     //SpielKarteNeu wieder schließen
     this.props.hideModal();
@@ -68,7 +71,7 @@ export default class SpielKarteNeu extends Component {
 
   render() {
     return(
-      <React.Fragment>      
+      <React.Fragment>
       <div className="spiel-card-neu">
           <div className="card">
             <Image className="card-img-top"

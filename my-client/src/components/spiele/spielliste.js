@@ -6,7 +6,7 @@ import SpielKarte from './spielkarte';
 const getSpiele = (spiele) => {
     return (
         <div className="card-deck">
-          {spiele.map(spiele => <SpielKarte key={spiele.id} spiele={spiele} />)}
+          {spiele.map(spiele => <SpielKarte key={spiele.id} spiel={spiele} />)}
         </div>
     );
 };

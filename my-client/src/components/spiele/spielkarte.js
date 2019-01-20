@@ -25,7 +25,7 @@ export default class SpielKarte extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        spiele: {},
+        spiel: {},
         show: false,
       };
     }
@@ -42,23 +42,23 @@ export default class SpielKarte extends Component {
 
     return(
         <div className="spiel-card">
-            <Modal show={this.state.show}> <SpielKarteEdit spiele={this.props.spiele} hideModal={this.hideModal}/></Modal>
+            <Modal show={this.state.show}> <SpielKarteEdit spiel={this.props.spiel} hideModal={this.hideModal}/></Modal>
             <div onClick={this.showModal} className="spiel-card card">
               <Image className="card-img-top"
-                src={"../images/spiel_" + this.props.spiele.id + ".jpg"}
+                src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
                 onError={(e)=>{
                   e.target.onerror = null;
                   e.target.src="../images/spiel_0.jpg"
                 }} responsive />
                 <div className="spiel-card-body card-body ">
-                  <h4 className="card-title">{this.props.spiele.titel}</h4>
-                  <h6 className="card-subtitle mb-2 text-muted">{this.props.spiele.autor}</h6>
+                  <h4 className="card-title">{this.props.spiel.titel}</h4>
+                  <h6 className="card-subtitle mb-2 text-muted">{this.props.spiel.autor}</h6>
                   <div className="align-self-end">
                     <div className="float-left">
-                      <FontAwesomeIcon icon="user-friends" /> {this.props.spiele.mitspieler}
+                      <FontAwesomeIcon icon="user-friends" /> {this.props.spiel.mitspieler}
                     </div>
                     <div className="float-right">
-                      <FontAwesomeIcon icon="clock" /> {this.props.spiele.dauer} min
+                      <FontAwesomeIcon icon="clock" /> {this.props.spiel.dauer} min
                     </div>
                   </div>
                 </div>
