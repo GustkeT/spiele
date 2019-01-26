@@ -31,7 +31,6 @@ export default class Spiele extends Component {
   }
 
   componentDidMount() {
-
     fetchSpiele()
       .then( data => {this.setState({
           spiele: data,
@@ -68,8 +67,23 @@ export default class Spiele extends Component {
   }
 
   removeSpiel = (spielToRemove) => {
-    let filteredArray = this.state.spiele.filter(item => item != spielToRemove)
-    this.setState({spiele: filteredArray});
+    var index = this.state.spiele.findIndex(item => item.id === spielToRemove.id);
+    if (index > -1) {
+      this.state.spiele.splice(index,1);
+    }
+    this.setState(({spiele}) => ({spiele: spiele}));
+    console.log('spiel to Remove' + JSON.stringify(spielToRemove) + index);
+    console.log('removeSpiel !!!' + JSON.stringify(this.state.spiele));
+  }
+
+  updateSpiel = (spielToUpdate) => {
+    var index = this.state.spiele.findIndex(item => item.id === spielToUpdate.id);
+    if (index > -1) {
+      this.state.spiele[index] = spielToUpdate;
+    }
+    this.setState(({spiele}) => ({spiele: spiele}));
+    console.log('spiel to update' + JSON.stringify(spielToUpdate) + index);
+    console.log('updateSpiel !!!' + JSON.stringify(this.state.spiele));
   }
 
   render() {
@@ -86,7 +100,7 @@ export default class Spiele extends Component {
                   <div className="col-sm-12">
                       {console.log('spiele: render start' + this.state.spiele)}
                       <Modal show={this.state.show}> <SpielKarteNeu attachSpiel={this.attachSpiel} hideModal={this.hideModal}/></Modal>
-                      <Spielliste removeSpiel={this.removeSpiel} spiele={this.state.spiele} />
+                      <Spielliste removeSpiel={this.removeSpiel} updateSpiel={this.updateSpiel} spiele={this.state.spiele} />
                       {console.log('spiele: render end' + this.state.spiele)}
                   </div>
               </div>

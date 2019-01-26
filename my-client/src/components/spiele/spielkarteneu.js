@@ -19,6 +19,8 @@ export default class SpielKarteNeu extends Component {
           mitspieler: '',
           dauer: ''
         },
+        isLoading: true,
+        neuesSpielId: 0,
       };
 
       // This binding is necessary to make `this` work in the callback
@@ -27,20 +29,24 @@ export default class SpielKarteNeu extends Component {
       this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSave(e){
-    //neues Spiel speichern in der DB
-    var neuesSpielId = saveSpiel(this.state.neuesSpiel);
-    console.log(neuesSpielId);
-
-    //TBD: wir vermuten, dass neuesSpielId die ID ist aber wir bekommen undefined (promisse)
-
-    //kopiere neuesSpiel in lokaler Variable
+  reloadSpiel(){
     var tempSpiel = this.state.neuesSpiel;
     //neuesSpiel in der Liste anhängen
-    this.props.attachSpiel(tempSpiel, neuesSpielId);
-
+    this.props.attachSpiel(tempSpiel, this.state.neuesSpielId);
     //SpielKarteNeu wieder schließen
     this.props.hideModal();
+    this.setState({isLoading : true});
+  }
+
+  handleSave(e){
+    //neues Spiel speichern in der DB
+    saveSpiel(this.state.neuesSpiel)
+    .then( data => {this.setState({
+        neuesSpielId: data,
+        isLoading : false,
+      })
+    })
+    .catch(error => this.setState({error, isLoading: false}));
   }
 
   handleCancel(e){
@@ -70,58 +76,64 @@ export default class SpielKarteNeu extends Component {
   }
 
   render() {
+    const { isLoading, error } = this.state;
+
     return(
       <React.Fragment>
-      <div className="spiel-card-neu">
-          <div className="card">
-            <Image className="card-img-top"
-              src={"../images/spiel_0.jpg"} responsive />
-              <div className="spiel-card-body card-body ">
-                <form>
-                  <FormGroup>
-                    <FormControl
-                      type="text"
-                      placeholder="Titel"
-                      value={this.state.neuesSpiel.titel}
-                      onChange={e => this.handleChange(e, "titel")}
-                    />
-                    <FormControl
-                      type="text"
-                      placeholder="Autor"
-                      value={this.state.neuesSpiel.autor}
-                      onChange={e => this.handleChange(e,"autor")}
-                    />
-                    <FormControl
-                      type="text"
-                      pattern="[0-9]*"
-                      placeholder="Mitspieler"
-                      value={this.state.neuesSpiel.mitspieler}
-                      onChange={e => this.handleChange(e,"mitspieler")}
-                    />
-                    <FormControl
-                      type="text"
-                      pattern="[0-9]*"
-                      placeholder="Dauer"
-                      value={this.state.neuesSpiel.dauer}
-                      onChange={e => this.handleChange(e,"dauer")}
-                    />
-                  </FormGroup>
-                </form>
-              </div>
-              <div>
-                <ButtonToolbar className="float-right">
-                  <ButtonGroup>
-                    <Button onClick={this.handleCancel}>
-                      <FontAwesomeIcon icon="undo" />
-                    </Button>
-                    <Button onClick={this.handleSave}>
-                      <FontAwesomeIcon icon="save" />
-                    </Button>
-                  </ButtonGroup>
-                </ButtonToolbar>
-              </div>
-          </div>
-      </div>
+      {!isLoading ? (
+        this.reloadSpiel()
+      ) : (console.log('Loading...'))}
+
+        <div className="spiel-card-neu">
+            <div className="card">
+              <Image className="card-img-top"
+                src={"../images/spiel_0.jpg"} responsive />
+                <div className="spiel-card-body card-body ">
+                  <form>
+                    <FormGroup>
+                      <FormControl
+                        type="text"
+                        placeholder="Titel"
+                        value={this.state.neuesSpiel.titel}
+                        onChange={e => this.handleChange(e, "titel")}
+                      />
+                      <FormControl
+                        type="text"
+                        placeholder="Autor"
+                        value={this.state.neuesSpiel.autor}
+                        onChange={e => this.handleChange(e,"autor")}
+                      />
+                      <FormControl
+                        type="text"
+                        pattern="[0-9]*"
+                        placeholder="Mitspieler"
+                        value={this.state.neuesSpiel.mitspieler}
+                        onChange={e => this.handleChange(e,"mitspieler")}
+                      />
+                      <FormControl
+                        type="text"
+                        pattern="[0-9]*"
+                        placeholder="Dauer"
+                        value={this.state.neuesSpiel.dauer}
+                        onChange={e => this.handleChange(e,"dauer")}
+                      />
+                    </FormGroup>
+                  </form>
+                </div>
+                <div>
+                  <ButtonToolbar className="float-right">
+                    <ButtonGroup>
+                      <Button onClick={this.handleCancel}>
+                        <FontAwesomeIcon icon="undo" />
+                      </Button>
+                      <Button onClick={this.handleSave}>
+                        <FontAwesomeIcon icon="save" />
+                      </Button>
+                    </ButtonGroup>
+                  </ButtonToolbar>
+                </div>
+            </div>
+        </div>
       </React.Fragment>
       );
     }

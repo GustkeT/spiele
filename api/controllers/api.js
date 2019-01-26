@@ -76,7 +76,9 @@ router.post('/spiele', async(req, res) => {
     var response = await pool.query('insert into unserespiele (titel, jahr, mitspieler, dauer, spieldesjahres, autor) values ($1, $2, $3, $4, $5, $6) RETURNING id', [titel, jahr, mitspieler, dauer, spieldesjahres, autor]);
     console.log('Save spiel' + JSON.stringify(response));
     //res.json({status: 'inserted'});
+    //res.send(response.rows[0].id);
     res.json(response.rows[0].id);
+    console.log('Butschi' + response.rows[0].id);
   }
   catch(e){
     console.error('Error running insert ' + e);

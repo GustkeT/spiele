@@ -21,7 +21,8 @@ export function saveSpiel(props) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(props)
-  });
+  })
+  .then( (response) => response.json() );
 }
 
 export function updateSpiel(props) {

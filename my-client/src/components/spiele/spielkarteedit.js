@@ -40,11 +40,13 @@ export default class SpielKarteEdit extends Component {
 
   handleUpdate(e){
     updateSpiel(this.state.aktuellesSpiel);
+    this.props.updateSpiel(this.state.aktuellesSpiel);
     this.props.hideModal();
   }
 
   handleDelete(e){
     deleteSpiel(this.state.aktuellesSpiel);
+    this.props.removeSpiel(this.state.aktuellesSpiel);
     this.props.hideModal();
   }
 
@@ -69,7 +71,6 @@ export default class SpielKarteEdit extends Component {
 
 
   render() {
-
     return(
       <React.Fragment>
       <div className="spiel-card-edit">
