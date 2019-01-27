@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {saveSpiel} from '../../services/SpieleService.js';
 
-import { Image, ButtonToolbar, ButtonGroup, Button, FormGroup, FormControl} from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faUserFriends, faClock, faUndo, faSave } from '@fortawesome/free-solid-svg-icons'
-library.add(faEdit, faTrash, faUserFriends, faClock, faUndo, faSave)
+import { faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave } from '@fortawesome/free-solid-svg-icons'
+library.add(faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave)
 
 
 export default class SpielKarteNeu extends Component {
@@ -89,7 +89,7 @@ export default class SpielKarteNeu extends Component {
               <Image className="card-img-top"
                 src={"../images/spiel_0.jpg"} responsive />
                 <div className="spiel-card-body card-body ">
-                  <form>
+                  <Form>
                     <FormGroup>
                       <FormControl
                         type="text"
@@ -118,13 +118,13 @@ export default class SpielKarteNeu extends Component {
                         onChange={e => this.handleChange(e,"dauer")}
                       />
                     </FormGroup>
-                  </form>
+                  </Form>
                 </div>
                 <div>
                   <ButtonToolbar className="float-right">
                     <ButtonGroup>
                       <Button onClick={this.handleCancel}>
-                        <FontAwesomeIcon icon="undo" />
+                        <FontAwesomeIcon icon="ban" />
                       </Button>
                       <Button onClick={this.handleSave}>
                         <FontAwesomeIcon icon="save" />

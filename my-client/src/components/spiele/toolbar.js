@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ButtonToolbar, ButtonGroup, Button, FormGroup, FormControl } from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl } from 'react-bootstrap';
 
 class ToolBar extends React.Component {
   constructor(props) {
@@ -12,14 +12,14 @@ class ToolBar extends React.Component {
   render() {
     return (
       <div className="btn-toolbar justify-content-between">
-        <form>
+        <Form>
           <FormGroup>
             <FormControl
               type="text"
               placeholder="Suche"
             />
           </FormGroup>
-        </form>
+        </Form>
       </div>
     );
   }

@@ -3,6 +3,8 @@ import Spielliste from './spielliste';
 import SpieleService from '../../services/SpieleService';
 import Toolbar from './toolbar';
 import SpielKarteNeu from './spielkarteneu';
+import {Form, FormGroup, FormControl, Col} from 'react-bootstrap';
+
 
 import {fetchSpiele} from '../../services/SpieleService.js';
 import neuesSpiel from '../../services/spiele.json';
@@ -92,8 +94,21 @@ export default class Spiele extends Component {
     return(
       <React.Fragment>
         {error ? <p>{error.message}</p> : null}
-        <Toolbar/>
-        <button onClick={this.showModal} type="button" className="btn btn-outline-secondary">Neues Spiel</button>
+        <div className="btn-toolbar justify-content-between">
+          <Form inline>
+            <FormGroup>
+              <Col lg={4}>
+                <button onClick={this.showModal} type="button" className="btn btn-outline-secondary">Neues Spiel</button>
+              </Col>
+              <Col lg={8}>
+                <FormControl
+                  type="text"
+                  placeholder="Suche"
+                />
+              </Col>
+            </FormGroup>
+          </Form>
+        </div>
         {!isLoading ? (
           <div className="container-fluid" style={{marginLeft: '-15px'}}>
               <div className="d-flex flex-row">

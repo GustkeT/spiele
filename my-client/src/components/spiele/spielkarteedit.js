@@ -6,8 +6,8 @@ import {updateSpiel} from '../../services/SpieleService.js';
 import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Col, ControlLabel} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faUserFriends, faClock, faSave, faUndo} from '@fortawesome/free-solid-svg-icons'
-library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo)
+import { faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faBan} from '@fortawesome/free-solid-svg-icons'
+library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faBan)
 
 export default class SpielKarteEdit extends Component {
 
@@ -82,12 +82,12 @@ export default class SpielKarteEdit extends Component {
                 e.target.src="../images/spiel_0.jpg"
               }} responsive />
               <div className="spiel-card-body card-body ">
-                <Form inline>
+                <Form>
                   <FormGroup>
-                    <Col componentClass={ControlLabel} sm={2}>
+                    <Col componentClass={ControlLabel} className="cardEditLabel">
                       Titel
                     </Col>
-                    <Col sm={10}>
+                    <Col>
                       <FormControl
                         type="text"
                         placeholder="Titel"
@@ -97,10 +97,10 @@ export default class SpielKarteEdit extends Component {
                     </Col>
                   </FormGroup>
                   <FormGroup>
-                    <Col componentClass={ControlLabel} sm={2}>
+                    <Col componentClass={ControlLabel} className="cardEditLabel">
                       Autor
                     </Col>
-                    <Col sm={10}>
+                    <Col>
                       <FormControl
                         type="text"
                         placeholder="Autor"
@@ -110,10 +110,10 @@ export default class SpielKarteEdit extends Component {
                     </Col>
                   </FormGroup>
                   <FormGroup>
-                    <Col componentClass={ControlLabel} sm={2}>
+                    <Col componentClass={ControlLabel} className="cardEditLabel">
                       Mitspieler
                     </Col>
-                    <Col sm={10}>
+                    <Col>
                       <FormControl
                         type="text"
                         placeholder="Mitspieler"
@@ -123,10 +123,10 @@ export default class SpielKarteEdit extends Component {
                     </Col>
                   </FormGroup>
                   <FormGroup>
-                    <Col componentClass={ControlLabel} sm={2}>
+                    <Col componentClass={ControlLabel} className="cardEditLabel">
                       Dauer
                     </Col>
-                    <Col sm={10}>
+                    <Col>
                       <FormControl
                         type="text"
                         placeholder="Dauer"
@@ -144,7 +144,7 @@ export default class SpielKarteEdit extends Component {
                       <FontAwesomeIcon icon="trash" />
                     </Button>
                     <Button onClick={this.handleCancel}>
-                      <FontAwesomeIcon icon="undo" />
+                      <FontAwesomeIcon icon="ban" />
                     </Button>
                     <Button disabled={JSON.stringify(this.state.originalSpiel) == JSON.stringify(this.state.aktuellesSpiel)} onClick={this.handleUpdate}>
                       <FontAwesomeIcon icon="save" />
