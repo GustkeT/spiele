@@ -73,6 +73,13 @@ router.post('/spiele', async(req, res) => {
   var autor = req.body.autor;
 
   try {
+    var autorExists = await pool.query('select name from autor where name = $1', [autor] );
+    if(autorExists.rows[0]) {
+      console.log('Autor exists: ' + JSON.stringify(autorExists));
+    }else{
+      var insertAutor = await pool.query('insert into autor (name) values ($1)' , [autor]);
+      console.log('Insert Autor' + JSON.stringify(insertAutor));
+    }
     var response = await pool.query('insert into unserespiele (titel, jahr, mitspieler, dauer, spieldesjahres, autor) values ($1, $2, $3, $4, $5, $6) RETURNING id', [titel, jahr, mitspieler, dauer, spieldesjahres, autor]);
     console.log('Save spiel' + JSON.stringify(response));
     res.json(response.rows[0].id);

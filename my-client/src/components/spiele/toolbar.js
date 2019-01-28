@@ -11,7 +11,7 @@ class ToolBar extends React.Component {
 
   render() {
     return (
-      <div className="btn-toolbar justify-content-between">
+      <div className="btn-toolbar justify-content-around">
       <Form inline>
         <FormGroup>
           <Col lg={4}>
