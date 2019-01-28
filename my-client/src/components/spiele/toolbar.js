@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl } from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Col, Form, FormGroup, FormControl } from 'react-bootstrap';
 
 class ToolBar extends React.Component {
   constructor(props) {
@@ -12,14 +12,19 @@ class ToolBar extends React.Component {
   render() {
     return (
       <div className="btn-toolbar justify-content-between">
-        <Form>
-          <FormGroup>
+      <Form inline>
+        <FormGroup>
+          <Col lg={4}>
+            <button onClick={this.props.showModal} type="button" className="btn btn-outline-secondary">Neues Spiel</button>
+          </Col>
+          <Col lg={8}>
             <FormControl
               type="text"
               placeholder="Suche"
             />
-          </FormGroup>
-        </Form>
+          </Col>
+        </FormGroup>
+      </Form>
       </div>
     );
   }

@@ -94,21 +94,11 @@ export default class Spiele extends Component {
     return(
       <React.Fragment>
         {error ? <p>{error.message}</p> : null}
-        <div className="btn-toolbar justify-content-between">
-          <Form inline>
-            <FormGroup>
-              <Col lg={4}>
-                <button onClick={this.showModal} type="button" className="btn btn-outline-secondary">Neues Spiel</button>
-              </Col>
-              <Col lg={8}>
-                <FormControl
-                  type="text"
-                  placeholder="Suche"
-                />
-              </Col>
-            </FormGroup>
-          </Form>
-        </div>
+        <Toolbar showModal={this.showModal}/>
+        <div>
+          <p>
+          </p>
+        </div>   
         {!isLoading ? (
           <div className="container-fluid" style={{marginLeft: '-15px'}}>
               <div className="d-flex flex-row">
