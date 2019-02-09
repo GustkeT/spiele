@@ -15,8 +15,9 @@ export default class SpielKarteNeu extends Component {
       this.state = {
         neuesSpiel: {
           titel: '',
-          autor: 'Rudi Hoffmann',
-          mitspieler: '',
+          autor: '',
+          minspieler: '',
+          maxspieler: 99,
           dauer: ''
         },
         isLoading: true,
@@ -36,6 +37,13 @@ export default class SpielKarteNeu extends Component {
     //SpielKarteNeu wieder schließen
     this.props.hideModal();
     this.setState({isLoading : true});
+
+    //Reset state
+    this.state.neuesSpiel.titel = '';
+    this.state.neuesSpiel.autor = '';
+    this.state.neuesSpiel.minspieler = '';
+    this.state.neuesSpiel.maxspieler = '';
+    this.state.neuesSpiel.dauer = '';
   }
 
   handleSave(e){
@@ -52,8 +60,9 @@ export default class SpielKarteNeu extends Component {
   handleCancel(e){
     //Reset state
     this.state.neuesSpiel.titel = '';
-    this.state.neuesSpiel.autor = 'Rudi Hoffmann';
-    this.state.neuesSpiel.mitspieler = '';
+    this.state.neuesSpiel.autor = '';
+    this.state.neuesSpiel.minspieler = '';
+    this.state.neuesSpiel.maxspieler = '';
     this.state.neuesSpiel.dauer = '';
 
     this.props.hideModal();
@@ -107,8 +116,8 @@ export default class SpielKarteNeu extends Component {
                         type="text"
                         pattern="[0-9]*"
                         placeholder="Mitspieler"
-                        value={this.state.neuesSpiel.mitspieler}
-                        onChange={e => this.handleChange(e,"mitspieler")}
+                        value={this.state.neuesSpiel.minspieler}
+                        onChange={e => this.handleChange(e,"minspieler")}
                       />
                       <FormControl
                         type="text"

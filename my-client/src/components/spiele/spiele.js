@@ -55,14 +55,16 @@ export default class Spiele extends Component {
       id: 0,
       titel: '',
       autor: '',
-      mitspieler: '',
+      minspieler: '',
+      maxspieler: '',
       dauer: ''
     };
 
     tempSpiel.id = neuesSpielId;
     tempSpiel.titel = neuesSpiel.titel;
     tempSpiel.autor = neuesSpiel.autor;
-    tempSpiel.mitspieler = neuesSpiel.mitspieler;
+    tempSpiel.minspieler = neuesSpiel.minspieler;
+    tempSpiel.maxspieler = neuesSpiel.maxspieler;
     tempSpiel.dauer = neuesSpiel.dauer;
 
     this.setState(({spiele}) => ({spiele: [...spiele, tempSpiel]}));
@@ -98,7 +100,7 @@ export default class Spiele extends Component {
         <div>
           <p>
           </p>
-        </div>   
+        </div>
         {!isLoading ? (
           <div className="container-fluid" style={{marginLeft: '-15px'}}>
               <div className="d-flex flex-row">

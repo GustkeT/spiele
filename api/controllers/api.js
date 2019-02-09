@@ -67,7 +67,8 @@ router.post('/spiele', async(req, res) => {
 
   var titel = req.body.titel;
   var jahr = req.body.jahr;
-  var mitspieler = req.body.mitspieler;
+  var minspieler = req.body.minspieler;
+  var maxspieler = req.body.maxspieler;
   var dauer = req.body.dauer;
   var spieldesjahres = req.body.spieldesjahres;
   var autor = req.body.autor;
@@ -80,7 +81,7 @@ router.post('/spiele', async(req, res) => {
       var insertAutor = await pool.query('insert into autor (name) values ($1)' , [autor]);
       console.log('Insert Autor' + JSON.stringify(insertAutor));
     }
-    var response = await pool.query('insert into unserespiele (titel, jahr, mitspieler, dauer, spieldesjahres, autor) values ($1, $2, $3, $4, $5, $6) RETURNING id', [titel, jahr, mitspieler, dauer, spieldesjahres, autor]);
+    var response = await pool.query('insert into unserespiele (titel, jahr, minspieler, maxspieler, dauer, spieldesjahres, autor) values ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [titel, jahr, minspieler, maxspieler, dauer, spieldesjahres, autor]);
     console.log('Save spiel' + JSON.stringify(response));
     res.json(response.rows[0].id);
   }
@@ -116,13 +117,14 @@ router.put('/spiele/:id', async(req, res) => {
   // Return the updated spiel
   var titel = req.body.titel;
   var jahr = req.body.jahr;
-  var mitspieler = req.body.mitspieler;
+  var minspieler = req.body.minspieler;
+  var maxspieler = req.body.maxspieler;
   var dauer = req.body.dauer;
   var spieldesjahres = req.body.spieldesjahres;
   var autor = req.body.autor;
 
   try {
-    var response = await pool.query('UPDATE unserespiele SET titel = $1, jahr = $2, mitspieler = $3, dauer = $4, spieldesjahres = $5, autor = $6 WHERE id = $7', [titel, jahr, mitspieler, dauer, spieldesjahres, autor, req.params.id]);
+    var response = await pool.query('UPDATE unserespiele SET titel = $1, jahr = $2, minspieler = $3, maxspieler = $4, dauer = $5, spieldesjahres = $6, autor = $7 WHERE id = $8', [titel, jahr, minspieler, maxspieler, dauer, spieldesjahres, autor, req.params.id]);
     res.json({status: 'updated'});
   }
   catch(e){
@@ -158,16 +160,18 @@ router.delete('/spiele/:id', async(req, res) => {
 
 // Hilfsfunktion zum Validieren des req.body
 function validateSpiel(spiel){
+  console.log('validateSpiel start');
   const schema = {
     id : Joi.string(),
     titel : Joi.string().required(),
     jahr : Joi.number().integer().min(1900).max(2100),
-    mitspieler : Joi.number().integer().min(1),
+    minspieler : Joi.number().integer().min(1),
+    maxspieler : Joi.number().integer(),
     dauer : Joi.number().integer(),
     spieldesjahres : Joi.number().integer(),
     autor : Joi.string(),
   };
-
+console.log('validateSpiel end'  );
   return Joi.validate(spiel, schema);
 }
 

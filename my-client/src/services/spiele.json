@@ -3,6 +3,7 @@
         "titel": "Neuer Titel",
         "autor": "Autor",
         "dauer": 20,
-        "mitspieler": 20,
+        "minspieler": 20,
+        "maxspieler": 20,
         "rating": 2.0
     }
