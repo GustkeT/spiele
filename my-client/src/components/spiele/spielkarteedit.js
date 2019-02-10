@@ -9,11 +9,45 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faBan} from '@fortawesome/free-solid-svg-icons'
 library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faBan)
 
+const Modal = ({ show, children }) => {
+  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+  return (
+    <div className={showHideClassName}>
+      <section className='confirm'>
+        {children}
+      </section>
+    </div>
+  );
+};
+
+class ConfirmDelete extends Component {
+  render() {
+    return(
+      <React.Fragment>
+        <div className='confirm-inner'>
+          <h5>Möchtest Du das Spiel wirklich löschen? </h5>
+          <ButtonToolbar>
+              <Button variant="secondary">
+                Abbrechen
+              </Button>
+              {' '}
+              <Button variant="danger">
+                Löschen
+              </Button>
+
+          </ButtonToolbar>
+        </div>
+      </React.Fragment>
+    );
+  }
+}
+
 export default class SpielKarteEdit extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
+        show: false,
         spiel: {},
         aktuellesSpiel: {
           id: this.props.spiel.id,
@@ -40,6 +74,14 @@ export default class SpielKarteEdit extends Component {
       this.handleChange = this.handleChange.bind(this);
   }
 
+  showModal = () => {
+    this.setState({ show: true });
+  }
+
+  hideModal = () => {
+    this.setState({ show: false });
+  }
+
   handleUpdate(e){
     updateSpiel(this.state.aktuellesSpiel);
     this.props.updateSpiel(this.state.aktuellesSpiel);
@@ -47,8 +89,11 @@ export default class SpielKarteEdit extends Component {
   }
 
   handleDelete(e){
-    deleteSpiel(this.state.aktuellesSpiel);
-    this.props.removeSpiel(this.state.aktuellesSpiel);
+    //this.showModal();
+    if(window.confirm('Möchtest Du das Spiel "'+ this.state.aktuellesSpiel.titel +'" wirklich löschen?')){
+      deleteSpiel(this.state.aktuellesSpiel);
+      this.props.removeSpiel(this.state.aktuellesSpiel);
+    }
     this.props.hideModal();
   }
 
@@ -77,6 +122,7 @@ export default class SpielKarteEdit extends Component {
       <React.Fragment>
       <div className="spiel-card-edit">
           <div className="card">
+            <Modal show={this.state.show}> <ConfirmDelete hideModal={this.hideModal}/></Modal>
             <Image className="card-img-top"
               src={"../images/spiel_" + this.state.aktuellesSpiel.id + ".jpg"}
               onError={(e)=>{
@@ -113,14 +159,27 @@ export default class SpielKarteEdit extends Component {
                   </FormGroup>
                   <FormGroup>
                     <Col componentClass={FormLabel} className="cardEditLabel">
-                      Mitspieler
+                      Mitspieler min
                     </Col>
                     <Col>
                       <FormControl
                         type="text"
-                        placeholder="Mitspieler"
+                        placeholder="Mitspieler min"
                         value={this.state.aktuellesSpiel.minspieler}
                         onChange={e => this.handleChange(e,"minspieler")}
+                      />
+                    </Col>
+                  </FormGroup>
+                  <FormGroup>
+                    <Col componentClass={FormLabel} className="cardEditLabel">
+                      Mitspieler max
+                    </Col>
+                    <Col>
+                      <FormControl
+                        type="text"
+                        placeholder="Mitspieler max"
+                        value={this.state.aktuellesSpiel.maxspieler}
+                        onChange={e => this.handleChange(e,"maxspieler")}
                       />
                     </Col>
                   </FormGroup>

@@ -17,7 +17,7 @@ export default class SpielKarteNeu extends Component {
           titel: '',
           autor: '',
           minspieler: '',
-          maxspieler: 99,
+          maxspieler: '',
           dauer: ''
         },
         isLoading: true,
@@ -115,9 +115,16 @@ export default class SpielKarteNeu extends Component {
                       <FormControl
                         type="text"
                         pattern="[0-9]*"
-                        placeholder="Mitspieler"
+                        placeholder="Mitspieler min"
                         value={this.state.neuesSpiel.minspieler}
                         onChange={e => this.handleChange(e,"minspieler")}
+                      />
+                      <FormControl
+                        type="text"
+                        pattern="[0-9]*"
+                        placeholder="Mitspieler max"
+                        value={this.state.neuesSpiel.maxspieler}
+                        onChange={e => this.handleChange(e,"maxspieler")}
                       />
                       <FormControl
                         type="text"

@@ -55,7 +55,7 @@ export default class SpielKarte extends Component {
                   <h6 className="card-subtitle mb-2 text-muted">{this.props.spiel.autor}</h6>
                   <div className="align-self-end">
                     <div className="float-left">
-                      <FontAwesomeIcon icon="user-friends" /> {this.props.spiel.minspieler}
+                      <FontAwesomeIcon icon="user-friends" /> {this.props.spiel.minspieler}-{this.props.spiel.maxspieler}
                     </div>
                     <div className="float-right">
                       <FontAwesomeIcon icon="clock" /> {this.props.spiel.dauer} min
