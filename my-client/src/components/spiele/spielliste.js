@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import SpielKarte from './spielkarte';
 
 
-const getSpiele = (spiele, removeSpiel, updateSpiel) => {
-    return (
-        <div className="card-deck">
-          {spiele.map(spiele => <SpielKarte removeSpiel={removeSpiel} updateSpiel={updateSpiel} key={spiele.id} spiel={spiele} />)}
-        </div>
-    );
+const getSpiele = (spiele, removeSpiel, updateSpiel, anzahlfilter) => {
+  const result = (anzahlfilter == 0 ? spiele : spiele.filter(spiele => spiele.minspieler <= anzahlfilter + 1 && spiele.maxspieler >= anzahlfilter ));
+  return (
+    <div className="card-deck">
+      {result.map(spiele => <SpielKarte removeSpiel={removeSpiel} updateSpiel={updateSpiel} key={spiele.id} spiel={spiele} />)}
+    </div>
+  );
 };
 
 const Spielliste = (props) => (
   <div>
-      {getSpiele(props.spiele, props.removeSpiel, props.updateSpiel)}
+      {getSpiele(props.spiele, props.removeSpiel, props.updateSpiel, props.anzahlfilter)}
   </div>
 );
 
 Spielliste.defaultProps = {
-    spiele: []
+    spiele: [],
+    anzahlfilter: 0,
 };
 
 Spielliste.propTypes = {
