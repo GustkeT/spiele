@@ -4,7 +4,9 @@ import SpielKarte from './spielkarte';
 
 
 const getSpiele = (spiele, removeSpiel, updateSpiel, anzahlfilter) => {
-  const result = (anzahlfilter == 0 ? spiele : spiele.filter(spiele => spiele.minspieler <= anzahlfilter + 1 && spiele.maxspieler >= anzahlfilter ));
+  const result = (anzahlfilter == 0 ? spiele
+               : (anzahlfilter == 6 ? spiele.filter(spiele => spiele.maxspieler >= anzahlfilter)
+               : (spiele.filter(spiele => spiele.minspieler <= anzahlfilter && spiele.maxspieler >= anzahlfilter ))));
   return (
     <div className="card-deck">
       {result.map(spiele => <SpielKarte removeSpiel={removeSpiel} updateSpiel={updateSpiel} key={spiele.id} spiel={spiele} />)}

@@ -29,10 +29,7 @@ export default class Spiele extends Component {
           spiele: [],
           error: null,
           show: false,
-          anzahlfilter0: 0,
-          anzahlfilter12: 1,
-          anzahlfilter34: 3,
-          anzahlfilter56: 5,
+          anzahlSpieler: 0,
       };
   }
 
@@ -46,17 +43,8 @@ export default class Spiele extends Component {
       .catch(error => this.setState({error, isLoading: false}));
   }
 
-  anzahlfilter0  = () => {
-      this.setState({ anzahlfilter: 0 });
-  }
-  anzahlfilter12  = () => {
-      this.setState({ anzahlfilter: 1 });
-  }
-  anzahlfilter34  = () => {
-      this.setState({ anzahlfilter: 3 });
-  }
-  anzahlfilter56  = () => {
-      this.setState({ anzahlfilter: 5 });
+  anzahlfilter  = (anzahlSpieler) => {
+      this.setState({ anzahlSpieler: anzahlSpieler });
   }
 
   showModal = () => {
@@ -114,10 +102,7 @@ export default class Spiele extends Component {
       <React.Fragment>
         {error ? <p>{error.message}</p> : null}
         <Toolbar showModal={this.showModal}
-          anzahlfilter0={this.anzahlfilter0}
-          anzahlfilter12={this.anzahlfilter12}
-          anzahlfilter34={this.anzahlfilter34}
-          anzahlfilter56={this.anzahlfilter56} />
+          anzahlfilter={this.anzahlfilter} />
         <div>
           <p>
           </p>
@@ -128,7 +113,7 @@ export default class Spiele extends Component {
                   <div className="col-sm-12">
                       {console.log('spiele: render start' + this.state.spiele)}
                       <Modal show={this.state.show}> <SpielKarteNeu attachSpiel={this.attachSpiel} hideModal={this.hideModal}/></Modal>
-                      <Spielliste removeSpiel={this.removeSpiel} updateSpiel={this.updateSpiel} spiele={this.state.spiele} anzahlfilter={this.state.anzahlfilter} />
+                      <Spielliste removeSpiel={this.removeSpiel} updateSpiel={this.updateSpiel} spiele={this.state.spiele} anzahlfilter={this.state.anzahlSpieler} />
                       {console.log('spiele: render end' + this.state.spiele)}
                   </div>
               </div>
