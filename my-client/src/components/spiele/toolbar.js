@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ButtonToolbar, ButtonGroup, Button, Col, Form, FormGroup, FormControl, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Col, Form, FormGroup, FormControl, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserFriends, faClock } from '@fortawesome/free-solid-svg-icons'
 
@@ -8,8 +8,15 @@ class ToolBar extends React.Component {
    super(props);
    this.state = {
      test: true,
+     suchbegriff: '',
    };
+   this.handleChange = this.handleChange.bind(this);
  }
+
+ handleChange(e) {
+   this.setState({ suchbegriff: e.target.value }); // zur Anzeige im Suchfeld wichtig
+   this.props.suchbegriff(e.target.value); // zur Übergabe an spiele.js
+   }
 
   render() {
     return (
@@ -30,10 +37,12 @@ class ToolBar extends React.Component {
             <button onClick={this.props.showModal} type="button" className="btn btn-outline-secondary">Neues Spiel</button>
           </Col>
           <Col sm={3}>
-            <FormControl
-              type="text"
-              placeholder="Suche"
-            />
+              <FormControl
+                type="text"
+                placeholder="Suche"
+                onChange={this.handleChange}
+                value={this.state.suchbegriff}
+              />
           </Col>
         </FormGroup>
       </Form>

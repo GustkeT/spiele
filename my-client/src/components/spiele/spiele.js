@@ -30,6 +30,7 @@ export default class Spiele extends Component {
           error: null,
           show: false,
           anzahlSpieler: 0,
+          suchbegriff: '',
       };
   }
 
@@ -45,6 +46,10 @@ export default class Spiele extends Component {
 
   anzahlfilter  = (anzahlSpieler) => {
       this.setState({ anzahlSpieler: anzahlSpieler });
+  }
+
+  suchbegriff  = (suchbegriff) => {
+      this.setState({ suchbegriff: suchbegriff });
   }
 
   showModal = () => {
@@ -102,7 +107,8 @@ export default class Spiele extends Component {
       <React.Fragment>
         {error ? <p>{error.message}</p> : null}
         <Toolbar showModal={this.showModal}
-          anzahlfilter={this.anzahlfilter} />
+          anzahlfilter={this.anzahlfilter}
+          suchbegriff={this.suchbegriff} />
         <div>
           <p>
           </p>
@@ -113,7 +119,7 @@ export default class Spiele extends Component {
                   <div className="col-sm-12">
                       {console.log('spiele: render start' + this.state.spiele)}
                       <Modal show={this.state.show}> <SpielKarteNeu attachSpiel={this.attachSpiel} hideModal={this.hideModal}/></Modal>
-                      <Spielliste removeSpiel={this.removeSpiel} updateSpiel={this.updateSpiel} spiele={this.state.spiele} anzahlfilter={this.state.anzahlSpieler} />
+                      <Spielliste removeSpiel={this.removeSpiel} updateSpiel={this.updateSpiel} spiele={this.state.spiele} anzahlfilter={this.state.anzahlSpieler} suchbegriff={this.state.suchbegriff} />
                       {console.log('spiele: render end' + this.state.spiele)}
                   </div>
               </div>
