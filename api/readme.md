@@ -45,29 +45,31 @@ Es wird eine package.json Datei erstellt:
 # Verbindung zur DB
 * Bearbeite die api.js:
 ```
-var Pool=require('pg').Pool;
-var config={
-  host:'localhost',
-  user:'spieler',
-  password:'spiel',
-  database:'spiele',
-  port:5433,
-  dialect:"postgres"
-};
+{
+  var Pool=require('pg').Pool;
+  var config={
+    host:'localhost',
+    user:'spieler',
+    password:'spiel',
+    database:'spiele',
+    port:5433,
+    dialect:"postgres"
+  };
 
-var pool =new Pool(config);
+  var pool =new Pool(config);
 
-async function get_hits(){
-  try{
-    var response = await pool.query("select * from unserespiele");
-    console.log(response.rows);
+  async function get_hits(){
+    try{
+      var response = await pool.query("select * from unserespiele");
+      console.log(response.rows);
+    }
+    catch(e){
+      console.error("MY ERROR", e);
+    }
   }
-  catch(e){
-    console.error("MY ERROR", e);
-  }
+
+  get_hits();
 }
-
-get_hits();
 ```
 
 # Ausprobieren
@@ -126,42 +128,40 @@ get_hits();
 # Webserver nutzen
 * Den Code in api.js wie folgt ändern:
 ```
-const express = require('express');
-var Pool = require('pg').Pool;
-var bodyParser = require('body-parser');
+  const express = require('express');
+  var Pool = require('pg').Pool;
+  var bodyParser = require('body-parser');
+  const app = express();
+  var config = {
+    host:'localhost',
+    user:'spieler',
+    password:'spiel',
+    database:'spiele',
+    port:5433,
+    dialect:"postgres"
+  };
 
-const app = express();
-var config = {
-  host:'localhost',
-  user:'spieler',
-  password:'spiel',
-  database:'spiele',
-  port:5433,
-  dialect:"postgres"
-};
+  var pool = new Pool(config);
+  app.set('port', (8080)); // definiere den port
+  app.use(bodyParser.json({type: 'application/json'})); // der body der response wird als json erwartet
+  app.use(bodyParser.urlencoded({extended: true}));
 
-var pool = new Pool(config);
+  //Definiere die API route "/spiele" und mappe den GET request auf den SQL-Befehl
+  app.get('/spiele', async (req, res) => {
+    try{
+      var response = await pool.query("select * from unserespiele");
+      console.log(JSON.stringify(response.rows));
+      res.json (response.rows);
+    }
+    catch(e){
+      console.error('Error running query ' + e);
+    }
+  });
 
-app.set('port', (8080)); // definiere den port
-app.use(bodyParser.json({type: 'application/json'})); // der body der response wird als json erwartet
-app.use(bodyParser.urlencoded({extended: true}));
-
-//Definiere die API route "/spiele" und mappe den GET request auf den SQL-Befehl
-app.get('/spiele', async (req, res) => {
-  try{
-    var response = await pool.query("select * from unserespiele");
-    console.log(JSON.stringify(response.rows));
-    res.json (response.rows);
-  }
-  catch(e){
-    console.error('Error running query ' + e);
-  }
-});
-
-//Starte den Webserver
-app.listen(app.get('port'), () => {
-  console.log('Running');
-})
+  //Starte den Webserver
+  app.listen(app.get('port'), () => {
+    console.log('Running');
+  })
 ```
 
 # Im Browser ausprobieren

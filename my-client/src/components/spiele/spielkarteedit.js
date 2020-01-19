@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {saveSpiel} from '../../services/SpieleService.js';
 import {deleteSpiel} from '../../services/SpieleService.js';
 import {updateSpiel} from '../../services/SpieleService.js';
+import {saveImage} from '../../services/SpieleService.js';
 
 import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Col, FormLabel} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -65,6 +66,9 @@ export default class SpielKarteEdit extends Component {
           maxspieler: this.props.spiel.maxspieler,
           dauer: this.props.spiel.dauer
         },
+        uploading: false,
+        images: [],
+        selectedFile: null,
       };
 
       // This binding is necessary to make `this` work in the callback
@@ -72,6 +76,26 @@ export default class SpielKarteEdit extends Component {
       this.handleCancel = this.handleCancel.bind(this);
       this.handleDelete = this.handleDelete.bind(this);
       this.handleChange = this.handleChange.bind(this);
+
+      this.inputOpenFileRef = React.createRef();
+  }
+
+  showOpenFileDlg = (e) => {
+    console.log("showOpenFileDlg start");
+    this.inputOpenFileRef.current.click();
+    console.log("showOpenFileDlg end");
+  }
+
+  onChange = (e) => {
+    console.log("onChange start" + e.target.files[0]);
+
+    this.setState({
+      selectedFile: e.target.files[0]
+    });
+
+    this.setState({ uploading: true });
+
+    console.log("onChange end");
   }
 
   showModal = () => {
@@ -83,13 +107,22 @@ export default class SpielKarteEdit extends Component {
   }
 
   handleUpdate(e){
+    // Speichert das geaenderte Spiel in die DB
+
+    //const formData = new FormData();
+    //formData.append('image', this.state.selectedFile, this.state.selectedFile.name);
+
+    //saveImage(formData);
+    //console.log('FormData: '+ formData);
+    //console.log('FormData.image: '+ formData.getAll('image'));
+
     updateSpiel(this.state.aktuellesSpiel);
     this.props.updateSpiel(this.state.aktuellesSpiel);
     this.props.hideModal();
   }
 
   handleDelete(e){
-    //this.showModal();
+    // Löscht das Spiel aus dem Speicher und der DB
     if(window.confirm('Möchtest Du das Spiel "'+ this.state.aktuellesSpiel.titel +'" wirklich löschen?')){
       deleteSpiel(this.state.aktuellesSpiel);
       this.props.removeSpiel(this.state.aktuellesSpiel);
@@ -98,12 +131,13 @@ export default class SpielKarteEdit extends Component {
   }
 
   handleCancel(e){
-    //Reset state
+    // Verwirft die Aenderungen
     this.state.aktuellesSpiel = this.state.originalSpiel;
     this.props.hideModal();
   }
 
   handleChange(e, field){
+    // Behandelt Aenderungen in der Eingabemaske
     let value = e.target.value;
     this.setState(
       prevState =>({
@@ -123,12 +157,13 @@ export default class SpielKarteEdit extends Component {
       <div className="spiel-card-edit">
           <div className="card">
             <Modal show={this.state.show}> <ConfirmDelete hideModal={this.hideModal}/></Modal>
+            <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
             <Image className="card-img-top"
-              src={"../images/spiel_" + this.state.aktuellesSpiel.id + ".jpg"}
+              src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
               onError={(e)=>{
-                e.target.onerror = null;
-                e.target.src="../images/spiel_0.jpg"
-              }} responsive />
+                  e.target.onerror = null;
+                  e.target.src="../images/spiel_0.jpg"
+                }} responsive />
               <div className="spiel-card-body card-body ">
                 <Form>
                   <FormGroup>

@@ -43,3 +43,14 @@ export function deleteSpiel(props) {
     })
     .catch(console.error);
 }
+
+export function saveImage(props) {
+  return fetch('/api/saveImage', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    body: props.formData
+    })
+    .catch(console.error);
+}

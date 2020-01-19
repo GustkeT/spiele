@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Joi = require('joi'); // Für die validierung der parameter nach einem Schema.
 var Pool = require('pg').Pool; // Der PostgreSQL-Adapter. Man nutzt einen Pool von DB-Connections um nicht jedes mal eine Verbindung auf- und abbauen zu müssen.
+var fs = require('fs'); // Schreiben ins FileSystem
 
 // Die Konfiguration der DB
 var config = {
@@ -19,7 +20,7 @@ var pool = new Pool(config);
 // Holle die Liste aller Spiele aus der DB
 router.get('/spiele', async (req, res) => {
   try{
-    var response = await pool.query("select * from unserespiele");
+    var response = await pool.query("select * from unserespiele order by titel");
     console.log(JSON.stringify(response.rows));
     //var spiele_json = JSON.stringify(response.rows);
     // res.render('index', {
@@ -156,6 +157,12 @@ router.delete('/spiele/:id', async(req, res) => {
     console.error('Error running delete ' + e);
   }
 
+});
+
+// Speichern des Bildes
+router.post('/saveimage', async(req, res) => {
+  console.log('saveimage: ' + JSON.stringify(req.body));
+  fs.writeFile('D:/Projekte/github/spiele/my-client/public/images/temp.jpg', req.body);
 });
 
 // Hilfsfunktion zum Validieren des req.body

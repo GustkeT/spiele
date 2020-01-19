@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {saveSpiel} from '../../services/SpieleService.js';
+import {saveImage} from '../../services/SpieleService.js';
 
 import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -9,6 +10,8 @@ library.add(faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave)
 
 
 export default class SpielKarteNeu extends Component {
+
+  //private readonly inputOpenFileRef : RefObject<HTMLInputElement>
 
   constructor(props) {
       super(props);
@@ -22,12 +25,48 @@ export default class SpielKarteNeu extends Component {
         },
         isLoading: true,
         neuesSpielId: 0,
+        uploading: false,
+        images: [],
+        selectedFile: null,
       };
 
       // This binding is necessary to make `this` work in the callback
       this.handleSave = this.handleSave.bind(this);
       this.handleCancel = this.handleCancel.bind(this);
       this.handleChange = this.handleChange.bind(this);
+
+      this.inputOpenFileRef = React.createRef();
+  }
+
+  showOpenFileDlg = (e) => {
+    console.log("showOpenFileDlg start");
+    this.inputOpenFileRef.current.click();
+    console.log("showOpenFileDlg end");
+  }
+
+  onChange = (e) => {
+    console.log("onChange start");
+    this.setState({
+      selectedFile: e.target.files[0]
+    });
+
+    const files = Array.from(e.target.files);
+    console.log('files array: '+ files);
+
+    this.setState({ uploading: true });
+    console.log(e.target.files[0]);
+
+
+    const formData = new FormData();
+
+    files.forEach((file, i) => {
+      formData.append(i, file)
+    });
+
+    saveImage(formData);
+    console.log(formData);
+
+    console.log("onChange end");
   }
 
   reloadSpiel(){
@@ -95,8 +134,10 @@ export default class SpielKarteNeu extends Component {
 
         <div className="spiel-card-neu">
             <div className="card">
-              <Image className="card-img-top"
-                src={"../images/spiel_0.jpg"} responsive />
+              <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
+              <Image onClick={this.showOpenFileDlg} className="card-img-top"
+                //src={"../images/spiel_0.jpg"} responsive />
+                src={this.state.selectedFile == null ? "../images/spiel_0.jpg" : "../images/temp.jpg"} responsive />
                 <div className="spiel-card-body card-body ">
                   <Form>
                     <FormGroup>
