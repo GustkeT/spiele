@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Image, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faUserFriends, faClock } from '@fortawesome/free-solid-svg-icons'
+import { faEdit, faTrash, faUserFriends, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
 import SpielKarteEdit from './spielkarteedit';
 
-library.add(faEdit, faTrash, faUserFriends, faClock)
+library.add(faEdit, faTrash, faUserFriends, faClock, faStar)
 
 
 const Modal = ({ show, children }) => {
@@ -26,8 +26,11 @@ export default class SpielKarte extends Component {
       super(props);
       this.state = {
         spiel: {},
+        gesamtbewertung: 11,
+        firstTime: true,
         show: false,
       };
+      console.log("Hallo - "+ this.props.spiel.bewertung);
     }
 
     showModal = () => {
@@ -38,8 +41,24 @@ export default class SpielKarte extends Component {
       this.setState({ show: false });
     }
 
-  render(){
+    berechneBewertung = () => {
+      if(this.state.firstTime){
+        this.setState({firstTime: false});
+        if (this.props.spiel.bewertung != null){
+          const sum = this.props.spiel.bewertung.reduce((a, b) => a + b, 0);
+          const avg = (sum / this.props.spiel.bewertung.length) || 0;
+          const perc = avg/5*100; // 5 Sterne sind 100%
+          const percRounded = Math.round(perc/10) * 10; //Wieviel Prozent der 5 gelben Sterne sollen angezeigt werden?
+          this.setState({ gesamtbewertung: percRounded });
+        }
+        else{
+          this.setState({ gesamtbewertung: 0 });
+        }
+      }
+    }
 
+  render(){
+    this.berechneBewertung();
     return(
         <div className="spiel-card">
             <Modal show={this.state.show}> <SpielKarteEdit removeSpiel={this.props.removeSpiel} updateSpiel={this.props.updateSpiel} spiel={this.props.spiel} hideModal={this.hideModal}/></Modal>
@@ -51,6 +70,15 @@ export default class SpielKarte extends Component {
                   e.target.src="../images/spiel_0.jpg"
                 }} responsive />
                 <div className="spiel-card-body card-body ">
+                  <FontAwesomeIcon icon="star" color='#ccc' />
+                  <FontAwesomeIcon icon="star" color='#ccc' />
+                  <FontAwesomeIcon icon="star" color='#ccc' />
+                  <FontAwesomeIcon icon="star" color='#ccc' />
+                  <FontAwesomeIcon icon="star" color='#ccc' />
+                  <div className="stars-inner" width={this.state.gesamtbewertung}>
+                  </div>
+
+                  {this.state.gesamtbewertung}
                   <h4 className="card-title">{this.props.spiel.titel}</h4>
                   <h6 className="card-subtitle mb-2 text-muted">{this.props.spiel.autor}</h6>
                   <div className="align-self-end">
