@@ -1,3 +1,14 @@
+Lokaler Postgres Server:
+Server Name: "PostgreSQL 10"
+User: postgres
+Password: post
+
+Docker Postgres Server:
+Server Name: "Docker"
+User: spieler
+Password: spiel
+
+
 # Vorbereitung
 (https://www.youtube.com/watch?v=30Vg6FTMK0A)
 * Erstelle Projektordner z.B. "pod1"

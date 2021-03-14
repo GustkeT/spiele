@@ -7,9 +7,9 @@ const getSpiele = (spiele, removeSpiel, updateSpiel, anzahlfilter, suchbegriff) 
   // Wenn kein Suchbegriff angegeben ist und kein Filter --> zeige alle Spiele
   //                                     und ein Filter  --> Zeige auf Spielerzahl gefilterte Liste an
   // Wenn Suchbegriff angegeben --> Zeige auf Suchbegriff gefilterte Liste an
-  const result = (suchbegriff == '' ?
-                 ((anzahlfilter == 0 ? spiele
-                  : (anzahlfilter == 6 ? spiele.filter(spiele => spiele.maxspieler >= anzahlfilter)
+  const result = (suchbegriff === '' ?
+                 ((anzahlfilter === 0 ? spiele
+                  : (anzahlfilter === 6 ? spiele.filter(spiele => spiele.maxspieler >= anzahlfilter)
                     : (spiele.filter(spiele => spiele.minspieler <= anzahlfilter && spiele.maxspieler >= anzahlfilter )))))
                 : (spiele.filter(spiele => spiele.titel.toLowerCase().includes(suchbegriff.toLowerCase()))))
                ;

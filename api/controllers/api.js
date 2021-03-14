@@ -6,11 +6,11 @@ var fs = require('fs'); // Schreiben ins FileSystem
 
 // Die Konfiguration der DB
 var config = {
-  host:'localhost',
+  host:'spiele-db-container',
   user:'spieler',
   password:'spiel',
   database:'spiele',
-  port:5433,
+  port:5432,
   dialect:"postgres"
 };
 

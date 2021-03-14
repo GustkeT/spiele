@@ -64,8 +64,8 @@ export default class SpielKarte extends Component {
             <Modal show={this.state.show}> <SpielKarteEdit removeSpiel={this.props.removeSpiel} updateSpiel={this.props.updateSpiel} spiel={this.props.spiel} hideModal={this.hideModal}/></Modal>
             <div onClick={this.showModal} className="spiel-card card">
               <Image className="card-img-top"
-                src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
-                onError={(e)=>{
+                  src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
+                  onError={(e)=>{
                   e.target.onerror = null;
                   e.target.src="../images/spiel_0.jpg"
                 }} responsive />

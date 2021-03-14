@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    container_name: spiele-db-container
+    environment:
+      POSTGRES_USER: spieler
+      POSTGRES_PASSWORD: spiel
+      POSTGRES_DB: spiele
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      # copy the sql script to create tables
+      - ./database/spiele_create_tables.sql:/docker-entrypoint-initdb.d/spiele_create_tables.sql
+      # copy the sql script to fill tables
+      - ./database/spiele_fill_tables.sql:/docker-entrypoint-initdb.d/spiele_fill_tables.sql
+    ports:
+      - "5432:5432"
+  api:
+    image: spiele-api
+    container_name: spiele-api-container
+    depends_on:
+      - db
+    ports:
+      - "8090:8090"
+  client:
+    image: spiele-client
+    container_name: spiele-client-container
+    volumes:
+      - ./my-client/public/images:/app/public/images
+    depends_on:
+      - api
+    ports:
+      - "8091:8091"
+    links:
+      - api
