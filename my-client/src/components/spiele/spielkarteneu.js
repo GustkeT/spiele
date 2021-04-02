@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import {saveSpiel} from '../../services/SpieleService.js';
 import {saveImage} from '../../services/SpieleService.js';
 
-import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl} from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Container, Row, Col} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave } from '@fortawesome/free-solid-svg-icons'
-library.add(faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave)
+import { faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
+library.add(faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave, faTimes)
 
 
 export default class SpielKarteNeu extends Component {
@@ -93,7 +93,9 @@ export default class SpielKarteNeu extends Component {
         isLoading : false,
       })
     })
-    .catch(error => this.setState({error, isLoading: false}));
+    .catch(
+      error => this.setState({error, isLoading: false})
+    )
   }
 
   handleCancel(e){
@@ -135,6 +137,15 @@ export default class SpielKarteNeu extends Component {
         <div className="spiel-card-neu">
             <div className="card">
               <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
+              <div>
+                <ButtonToolbar className="float-right">
+                  <ButtonGroup>
+                    <Button variant='light' onClick={this.handleCancel}>
+                      <FontAwesomeIcon icon={faTimes} />
+                    </Button>
+                  </ButtonGroup>
+                </ButtonToolbar>
+              </div>
               <Image onClick={this.showOpenFileDlg} className="card-img-top"
                 //src={"../images/spiel_0.jpg"} responsive />
                 src={this.state.selectedFile == null ? "../images/spiel_0.jpg" : "../images/temp.jpg"} responsive />
@@ -177,17 +188,14 @@ export default class SpielKarteNeu extends Component {
                     </FormGroup>
                   </Form>
                 </div>
-                <div>
-                  <ButtonToolbar className="float-right">
-                    <ButtonGroup>
-                      <Button onClick={this.handleCancel}>
-                        <FontAwesomeIcon icon="ban" />
-                      </Button>
-                      <Button onClick={this.handleSave}>
-                        <FontAwesomeIcon icon="save" />
-                      </Button>
-                    </ButtonGroup>
-                  </ButtonToolbar>
+                <div align="center">
+                  <Container>
+                    <Row className="justify-content-md-center">
+                      <Col xs lg="2">
+                        <Button onClick={this.handleSave}>Speichern</Button>
+                      </Col>
+                    </Row>
+                  </Container>
                 </div>
             </div>
         </div>

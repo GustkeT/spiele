@@ -4,11 +4,11 @@ import {deleteSpiel} from '../../services/SpieleService.js';
 import {updateSpiel} from '../../services/SpieleService.js';
 import {saveImage} from '../../services/SpieleService.js';
 
-import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Col, FormLabel} from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Container, Row, Col, FormLabel} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faBan} from '@fortawesome/free-solid-svg-icons'
-library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faBan)
+import {faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faTimes} from '@fortawesome/free-solid-svg-icons'
+library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faTimes )
 
 const Modal = ({ show, children }) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
@@ -157,6 +157,15 @@ export default class SpielKarteEdit extends Component {
       <div className="spiel-card-edit">
           <div className="card">
             <Modal show={this.state.show}> <ConfirmDelete hideModal={this.hideModal}/></Modal>
+            <div>
+              <ButtonToolbar className="float-right">
+                <ButtonGroup>
+                  <Button variant='light' onClick={this.handleCancel}>
+                    <FontAwesomeIcon icon={faTimes} />
+                  </Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </div>
             <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
             <Image className="card-img-top"
               src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
@@ -233,20 +242,18 @@ export default class SpielKarteEdit extends Component {
                   </FormGroup>
                 </Form>
               </div>
-              <div>
-                <ButtonToolbar className="float-right">
-                  <ButtonGroup>
-                    <Button onClick={this.handleDelete}>
-                      <FontAwesomeIcon icon="trash" />
-                    </Button>
-                    <Button onClick={this.handleCancel}>
-                      <FontAwesomeIcon icon="ban" />
-                    </Button>
-                    <Button disabled={JSON.stringify(this.state.originalSpiel) == JSON.stringify(this.state.aktuellesSpiel)} onClick={this.handleUpdate}>
-                      <FontAwesomeIcon icon="save" />
-                    </Button>
-                  </ButtonGroup>
-                </ButtonToolbar>
+              <div align="center">
+                <Container>
+                  <Row className="justify-content-md-center">
+                    <Col xs lg="2">
+                      <Button onClick={this.handleDelete}>Löschen</Button>
+                    </Col>
+                    <Col md="auto"></Col>
+                    <Col xs lg="2">
+                      <Button disabled={JSON.stringify(this.state.originalSpiel) == JSON.stringify(this.state.aktuellesSpiel)} onClick={this.handleUpdate}>Speichern</Button>
+                    </Col>
+                  </Row>
+                </Container>
               </div>
           </div>
       </div>
