@@ -154,109 +154,107 @@ export default class SpielKarteEdit extends Component {
   render() {
     return(
       <React.Fragment>
-      <div className="spiel-card-edit">
-          <div className="card">
-            <Modal show={this.state.show}> <ConfirmDelete hideModal={this.hideModal}/></Modal>
-            <div>
-              <ButtonToolbar className="float-right">
-                <ButtonGroup>
-                  <Button variant='light' onClick={this.handleCancel}>
-                    <FontAwesomeIcon icon={faTimes} />
-                  </Button>
-                </ButtonGroup>
-              </ButtonToolbar>
-            </div>
-            <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
-            <Image className="card-img-top"
-              src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
-              onError={(e)=>{
-                  e.target.onerror = null;
-                  e.target.src="../images/spiel_0.jpg"
-                }} responsive />
-              <div className="spiel-card-body card-body ">
-                <Form>
-                  <FormGroup>
-                    <Col componentClass={FormLabel} className="cardEditLabel">
-                      Titel
-                    </Col>
-                    <Col>
-                      <FormControl
-                        type="text"
-                        placeholder="Titel"
-                        value={this.state.aktuellesSpiel.titel}
-                        onChange={e => this.handleChange(e,"titel")}
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup>
-                    <Col componentClass={FormLabel} className="cardEditLabel">
-                      Autor
-                    </Col>
-                    <Col>
-                      <FormControl
-                        type="text"
-                        placeholder="Autor"
-                        value={this.state.aktuellesSpiel.autor}
-                        onChange={e => this.handleChange(e,"autor")}
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup>
-                    <Col componentClass={FormLabel} className="cardEditLabel">
-                      Mitspieler min
-                    </Col>
-                    <Col>
-                      <FormControl
-                        type="text"
-                        placeholder="Mitspieler min"
-                        value={this.state.aktuellesSpiel.minspieler}
-                        onChange={e => this.handleChange(e,"minspieler")}
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup>
-                    <Col componentClass={FormLabel} className="cardEditLabel">
-                      Mitspieler max
-                    </Col>
-                    <Col>
-                      <FormControl
-                        type="text"
-                        placeholder="Mitspieler max"
-                        value={this.state.aktuellesSpiel.maxspieler}
-                        onChange={e => this.handleChange(e,"maxspieler")}
-                      />
-                    </Col>
-                  </FormGroup>
-                  <FormGroup>
-                    <Col componentClass={FormLabel} className="cardEditLabel">
-                      Dauer
-                    </Col>
-                    <Col>
-                      <FormControl
-                        type="text"
-                        placeholder="Dauer"
-                        value={this.state.aktuellesSpiel.dauer}
-                        onChange={e => this.handleChange(e,"dauer")}
-                      />
-                    </Col>
-                  </FormGroup>
-                </Form>
-              </div>
-              <div align="center">
-                <Container>
-                  <Row className="justify-content-md-center">
-                    <Col xs lg="2">
-                      <Button onClick={this.handleDelete}>Löschen</Button>
-                    </Col>
-                    <Col md="auto"></Col>
-                    <Col xs lg="2">
-                      <Button disabled={JSON.stringify(this.state.originalSpiel) == JSON.stringify(this.state.aktuellesSpiel)} onClick={this.handleUpdate}>Speichern</Button>
-                    </Col>
-                  </Row>
-                </Container>
-              </div>
+        <div>
+          <Modal show={this.state.show}> <ConfirmDelete hideModal={this.hideModal}/></Modal>
+          <div>
+            <ButtonToolbar className="float-right">
+              <ButtonGroup>
+                <Button variant='light' onClick={this.handleCancel}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </Button>
+              </ButtonGroup>
+            </ButtonToolbar>
           </div>
-      </div>
+          <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
+          <Image className="card-img-top"
+            src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
+            onError={(e)=>{
+                e.target.onerror = null;
+                e.target.src="../images/spiel_0.jpg"
+              }} responsive />
+          <div className="spiel-card-body card-body ">
+            <Form>
+              <FormGroup>
+                <Col componentClass={FormLabel} className="cardEditLabel">
+                  Titel
+                </Col>
+                <Col>
+                  <FormControl
+                    type="text"
+                    placeholder="Titel"
+                    value={this.state.aktuellesSpiel.titel}
+                    onChange={e => this.handleChange(e,"titel")}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={FormLabel} className="cardEditLabel">
+                  Autor
+                </Col>
+                <Col>
+                  <FormControl
+                    type="text"
+                    placeholder="Autor"
+                    value={this.state.aktuellesSpiel.autor}
+                    onChange={e => this.handleChange(e,"autor")}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={FormLabel} className="cardEditLabel">
+                  Mitspieler min
+                </Col>
+                <Col>
+                  <FormControl
+                    type="text"
+                    placeholder="Mitspieler min"
+                    value={this.state.aktuellesSpiel.minspieler}
+                    onChange={e => this.handleChange(e,"minspieler")}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={FormLabel} className="cardEditLabel">
+                  Mitspieler max
+                </Col>
+                <Col>
+                  <FormControl
+                    type="text"
+                    placeholder="Mitspieler max"
+                    value={this.state.aktuellesSpiel.maxspieler}
+                    onChange={e => this.handleChange(e,"maxspieler")}
+                  />
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col componentClass={FormLabel} className="cardEditLabel">
+                  Dauer
+                </Col>
+                <Col>
+                  <FormControl
+                    type="text"
+                    placeholder="Dauer"
+                    value={this.state.aktuellesSpiel.dauer}
+                    onChange={e => this.handleChange(e,"dauer")}
+                  />
+                </Col>
+              </FormGroup>
+            </Form>
+          </div>
+          <div className="spiel-card-edit-footer" align="center">
+            <Container>
+              <Row className="justify-content-md-center">
+                <Col xs lg="2">
+                  <Button onClick={this.handleDelete}>Löschen</Button>
+                </Col>
+                <Col md="auto"></Col>
+                <Col xs lg="2">
+                  <Button disabled={JSON.stringify(this.state.originalSpiel) == JSON.stringify(this.state.aktuellesSpiel)} onClick={this.handleUpdate}>Speichern</Button>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </div>
       </React.Fragment>
       );
     }

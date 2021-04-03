@@ -135,7 +135,7 @@ export default class SpielKarteNeu extends Component {
       ) : (console.log('Loading...'))}
 
         <div className="spiel-card-neu">
-            <div className="card">
+            <div>
               <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
               <div>
                 <ButtonToolbar className="float-right">
@@ -188,7 +188,7 @@ export default class SpielKarteNeu extends Component {
                     </FormGroup>
                   </Form>
                 </div>
-                <div align="center">
+                <div className="spiel-card-edit-footer" align="center">
                   <Container>
                     <Row className="justify-content-md-center">
                       <Col xs lg="2">

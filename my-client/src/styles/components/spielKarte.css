@@ -7,6 +7,7 @@
 
 .spiel-card.card {
     height: 300px;
+    margin-bottom: 5px;
 }
 
 .card-footer-badge {
@@ -18,21 +19,17 @@
 }
 
 .spiel-card-neu {
-    margin-left: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
     width: auto;
     height: auto;
 }
 
 .spiel-card-edit {
-    margin-left: 5px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
     width: auto;
     height: auto;
+}
+
+.spiel-card-edit-footer {
+    margin-bottom: 15px;
 }
 
 .cardEditLabel {
@@ -49,15 +46,15 @@
 }
 
 .modal-main {
-  position:fixed;
-  background: lightblue;
+  position: fixed;
+  background: white;
   width: auto;
   height: auto;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
+  border-radius: 5px;
 }
-
 
 .display-block {
   display: block;
