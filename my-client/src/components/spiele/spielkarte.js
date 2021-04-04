@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, ButtonToolbar, ButtonGroup, Button} from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Modal} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faUserFriends, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
 import SpielKarteEdit from './spielkarteedit';
 
 library.add(faEdit, faTrash, faUserFriends, faClock, faStar)
-
-
-const Modal = ({ show, children }) => {
-  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
-  return (
-    <div className={showHideClassName}>
-      <section className='modal-main'>
-        {children}
-      </section>
-    </div>
-  );
-};
 
 export default class SpielKarte extends Component {
 
@@ -30,7 +18,7 @@ export default class SpielKarte extends Component {
         firstTime: true,
         show: false,
       };
-      console.log("Hallo - "+ this.props.spiel.bewertung);
+      //console.log("Hallo - "+ this.props.spiel.bewertung);
     }
 
     showModal = () => {
@@ -59,13 +47,17 @@ export default class SpielKarte extends Component {
 
   render(){
     this.berechneBewertung();
+    // 'show' um die Karte SpielKarteEdit (modal) zu zeigen; 'onHide' um die Karte zu verbergen, wenn man auﬂerhalb klickt
+    // 'hideModal' als callback um die Karte zu verbergen, wenn man das X klickt
     return(
         <div className="spiel-card">
-            <Modal show={this.state.show}> <SpielKarteEdit removeSpiel={this.props.removeSpiel} updateSpiel={this.props.updateSpiel} spiel={this.props.spiel} hideModal={this.hideModal}/></Modal>
+            <Modal show={this.state.show} onHide={this.hideModal}>
+              <SpielKarteEdit removeSpiel={this.props.removeSpiel} updateSpiel={this.props.updateSpiel} spiel={this.props.spiel} hideModal={this.hideModal}/>
+            </Modal>
             <div onClick={this.showModal} className="spiel-card card">
               <Image className="card-img-top"
-                  src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
-                  onError={(e)=>{
+                src={"../images/spiel_" + this.props.spiel.id + ".jpg"}
+                onError={(e)=>{
                   e.target.onerror = null;
                   e.target.src="../images/spiel_0.jpg"
                 }} responsive />

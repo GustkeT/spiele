@@ -10,45 +10,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faTimes} from '@fortawesome/free-solid-svg-icons'
 library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faTimes )
 
-const Modal = ({ show, children }) => {
-  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
-  return (
-    <div className={showHideClassName}>
-      <section className='confirm'>
-        {children}
-      </section>
-    </div>
-  );
-};
-
-class ConfirmDelete extends Component {
-  render() {
-    return(
-      <React.Fragment>
-        <div className='confirm-inner'>
-          <h5>Möchtest Du das Spiel wirklich löschen? </h5>
-          <ButtonToolbar>
-              <Button variant="secondary">
-                Abbrechen
-              </Button>
-              {' '}
-              <Button variant="danger">
-                Löschen
-              </Button>
-
-          </ButtonToolbar>
-        </div>
-      </React.Fragment>
-    );
-  }
-}
+// class ConfirmDelete extends Component {
+//   render() {
+//     return(
+//       <React.Fragment>
+//         <div className='confirm-inner'>
+//           <h5>Möchtest Du das Spiel wirklich löschen? </h5>
+//           <ButtonToolbar>
+//               <Button variant="secondary">
+//                 Abbrechen
+//               </Button>
+//               {' '}
+//               <Button variant="danger">
+//                 Löschen
+//               </Button>
+//
+//           </ButtonToolbar>
+//         </div>
+//       </React.Fragment>
+//     );
+//   }
+// }
 
 export default class SpielKarteEdit extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
-        show: false,
         spiel: {},
         aktuellesSpiel: {
           id: this.props.spiel.id,
@@ -96,14 +84,6 @@ export default class SpielKarteEdit extends Component {
     this.setState({ uploading: true });
 
     console.log("onChange end");
-  }
-
-  showModal = () => {
-    this.setState({ show: true });
-  }
-
-  hideModal = () => {
-    this.setState({ show: false });
   }
 
   handleUpdate(e){
@@ -155,7 +135,6 @@ export default class SpielKarteEdit extends Component {
     return(
       <React.Fragment>
         <div>
-          <Modal show={this.state.show}> <ConfirmDelete hideModal={this.hideModal}/></Modal>
           <div>
             <ButtonToolbar className="float-right">
               <ButtonGroup>

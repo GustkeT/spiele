@@ -3,22 +3,11 @@ import Spielliste from './spielliste';
 import SpieleService from '../../services/SpieleService';
 import Toolbar from './toolbar';
 import SpielKarteNeu from './spielkarteneu';
-import {Form, FormGroup, FormControl, Col} from 'react-bootstrap';
+import {Form, FormGroup, FormControl, Col, Modal} from 'react-bootstrap';
 
 
 import {fetchSpiele} from '../../services/SpieleService.js';
 import neuesSpiel from '../../services/spiele.json';
-
-const Modal = ({ show, children }) => {
-  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
-  return (
-    <div className={showHideClassName}>
-      <section className='modal-main'>
-        {children}
-      </section>
-    </div>
-  );
-};
 
 export default class Spiele extends Component {
 
@@ -106,9 +95,7 @@ export default class Spiele extends Component {
     return(
       <React.Fragment>
         {error ? <p>{error.message}</p> : null}
-        <Toolbar showModal={this.showModal}
-          anzahlfilter={this.anzahlfilter}
-          suchbegriff={this.suchbegriff} />
+        <Toolbar anzahlfilter={this.anzahlfilter} suchbegriff={this.suchbegriff} />
         <div>
           <p>
           </p>
@@ -118,7 +105,9 @@ export default class Spiele extends Component {
               <div className="d-flex flex-row">
                   <div className="col-sm-12">
                       {console.log('spiele: render start' + this.state.spiele)}
-                      <Modal show={this.state.show}> <SpielKarteNeu attachSpiel={this.attachSpiel} hideModal={this.hideModal}/></Modal>
+                      <Modal show={this.state.show} onHide={this.hideModal}>
+                        <SpielKarteNeu attachSpiel={this.attachSpiel} hideModal={this.hideModal}/>
+                      </Modal>
                       <Spielliste removeSpiel={this.removeSpiel} updateSpiel={this.updateSpiel} spiele={this.state.spiele} anzahlfilter={this.state.anzahlSpieler} suchbegriff={this.state.suchbegriff} />
                       {console.log('spiele: render end' + this.state.spiele)}
                   </div>
