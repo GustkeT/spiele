@@ -95,7 +95,7 @@ export default class Spiele extends Component {
     return(
       <React.Fragment>
         {error ? <p>{error.message}</p> : null}
-        <Toolbar anzahlfilter={this.anzahlfilter} suchbegriff={this.suchbegriff} />
+        <Toolbar showModal={this.showModal} anzahlfilter={this.anzahlfilter} suchbegriff={this.suchbegriff} />
         <div>
           <p>
           </p>
