@@ -126,7 +126,7 @@ export default class SpielKarteEdit extends Component {
           [field]: value
         }
       }),
-      () => console.log(this.state.aktuellesSpiel)
+      () => console.log(JSON.stringify(this.state.aktuellesSpiel) + "\n" + JSON.stringify(this.state.originalSpiel))
     );
   }
 

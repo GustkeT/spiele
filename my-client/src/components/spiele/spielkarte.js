@@ -50,7 +50,7 @@ export default class SpielKarte extends Component {
     // 'show' um die Karte SpielKarteEdit (modal) zu zeigen; 'onHide' um die Karte zu verbergen, wenn man auﬂerhalb klickt
     // 'hideModal' als callback um die Karte zu verbergen, wenn man das X klickt
     return(
-        <div className="spiel-card">
+        <div>
             <Modal show={this.state.show} onHide={this.hideModal}>
               <SpielKarteEdit removeSpiel={this.props.removeSpiel} updateSpiel={this.props.updateSpiel} spiel={this.props.spiel} hideModal={this.hideModal}/>
             </Modal>
@@ -67,9 +67,7 @@ export default class SpielKarte extends Component {
                   <FontAwesomeIcon icon="star" color='#ccc' />
                   <FontAwesomeIcon icon="star" color='#ccc' />
                   <FontAwesomeIcon icon="star" color='#ccc' />
-                  <div className="stars-inner" width={this.state.gesamtbewertung}>
-                  </div>
-
+                  <div className="stars-inner" width={this.state.gesamtbewertung}></div>
                   {this.state.gesamtbewertung}
                   <h4 className="card-title">{this.props.spiel.titel}</h4>
                   <h6 className="card-subtitle mb-2 text-muted">{this.props.spiel.autor}</h6>
