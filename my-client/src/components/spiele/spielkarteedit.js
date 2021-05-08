@@ -4,33 +4,11 @@ import {deleteSpiel} from '../../services/SpieleService.js';
 import {updateSpiel} from '../../services/SpieleService.js';
 import {saveImage} from '../../services/SpieleService.js';
 
-import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Container, Row, Col, FormLabel} from 'react-bootstrap';
+import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Container, Row, Col, FormLabel, Modal} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faTimes} from '@fortawesome/free-solid-svg-icons'
 library.add(faEdit, faTrash, faUserFriends, faClock, faSave, faUndo, faTimes )
-
-// class ConfirmDelete extends Component {
-//   render() {
-//     return(
-//       <React.Fragment>
-//         <div className='confirm-inner'>
-//           <h5>Möchtest Du das Spiel wirklich löschen? </h5>
-//           <ButtonToolbar>
-//               <Button variant="secondary">
-//                 Abbrechen
-//               </Button>
-//               {' '}
-//               <Button variant="danger">
-//                 Löschen
-//               </Button>
-//
-//           </ButtonToolbar>
-//         </div>
-//       </React.Fragment>
-//     );
-//   }
-// }
 
 export default class SpielKarteEdit extends Component {
 
@@ -57,6 +35,7 @@ export default class SpielKarteEdit extends Component {
         uploading: false,
         images: [],
         selectedFile: null,
+        isOpen: false
       };
 
       // This binding is necessary to make `this` work in the callback
@@ -67,6 +46,9 @@ export default class SpielKarteEdit extends Component {
 
       this.inputOpenFileRef = React.createRef();
   }
+
+  openModal = () => this.setState({ isOpen: true });
+  closeModal = () => this.setState({ isOpen: false });
 
   showOpenFileDlg = (e) => {
     console.log("showOpenFileDlg start");
@@ -103,10 +85,8 @@ export default class SpielKarteEdit extends Component {
 
   handleDelete(e){
     // Löscht das Spiel aus dem Speicher und der DB
-    if(window.confirm('Möchtest Du das Spiel "'+ this.state.aktuellesSpiel.titel +'" wirklich löschen?')){
-      deleteSpiel(this.state.aktuellesSpiel);
-      this.props.removeSpiel(this.state.aktuellesSpiel);
-    }
+    deleteSpiel(this.state.aktuellesSpiel);
+    this.props.removeSpiel(this.state.aktuellesSpiel);
     this.props.hideModal();
   }
 
@@ -129,7 +109,6 @@ export default class SpielKarteEdit extends Component {
       () => console.log(JSON.stringify(this.state.aktuellesSpiel) + "\n" + JSON.stringify(this.state.originalSpiel))
     );
   }
-
 
   render() {
     return(
@@ -224,7 +203,7 @@ export default class SpielKarteEdit extends Component {
             <Container>
               <Row className="justify-content-md-center">
                 <Col xs lg="2">
-                  <Button onClick={this.handleDelete}>Löschen</Button>
+                  <Button onClick={this.openModal}>Löschen</Button>
                 </Col>
                 <Col md="auto"></Col>
                 <Col xs lg="2">
@@ -233,6 +212,16 @@ export default class SpielKarteEdit extends Component {
               </Row>
             </Container>
           </div>
+          <Modal show={this.state.isOpen} onHide={this.closeModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Spiel löschen</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Möchtest Du das Spiel wirklich löschen?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.handleDelete}>Ja</Button>
+              <Button variant="secondary" onClick={this.closeModal}>Nein</Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </React.Fragment>
       );
