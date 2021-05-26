@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var FormData = require('form-data');
 const Joi = require('joi'); // Für die validierung der parameter nach einem Schema.
 var Pool = require('pg').Pool; // Der PostgreSQL-Adapter. Man nutzt einen Pool von DB-Connections um nicht jedes mal eine Verbindung auf- und abbauen zu müssen.
 var fs = require('fs'); // Schreiben ins FileSystem
+var Busboy = require('busboy');
 
 // Die Konfiguration der DB
 var config = {
@@ -58,7 +60,7 @@ router.get('/spiele/:id', async (req, res) => {
 // Definiere die API route "/spiele/{id}" und mappe den POST request auf den SQL-Befehl
 // Lege ein neues Spiel an. Die Id wird von der DB selbst angelegt
 router.post('/spiele', async(req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
 
   const { error } = validateSpiel(req.body);
   if(error){
@@ -66,24 +68,18 @@ router.post('/spiele', async(req, res) => {
     return;
   }
 
-  var titel = req.body.titel;
-  var jahr = req.body.jahr;
-  var minspieler = req.body.minspieler;
-  var maxspieler = req.body.maxspieler;
-  var dauer = req.body.dauer;
-  var spieldesjahres = req.body.spieldesjahres;
-  var autor = req.body.autor;
-
   try {
-    var autorExists = await pool.query('select name from autor where name = $1', [autor] );
+    var autorExists = await pool.query('select name from autor where name = $1', [req.body.autor] );
+
     if(autorExists.rows[0]) {
       console.log('Autor exists: ' + JSON.stringify(autorExists));
     }else{
-      var insertAutor = await pool.query('insert into autor (name) values ($1)' , [autor]);
+      console.log('Autor does not exist, try to insert ' + req.body.autor );
+      var insertAutor = await pool.query('insert into autor (name) values ($1)' , [req.body.autor]);
       console.log('Insert Autor' + JSON.stringify(insertAutor));
     }
-    var response = await pool.query('insert into unserespiele (titel, jahr, minspieler, maxspieler, dauer, spieldesjahres, autor) values ($1, $2, $3, $4, $5, $6, $7) RETURNING id', [titel, jahr, minspieler, maxspieler, dauer, spieldesjahres, autor]);
-    console.log('Save spiel' + JSON.stringify(response));
+    var response = await pool.query('insert into unserespiele (titel, jahr, minspieler, maxspieler, dauer, spieldesjahres, autor) values ($1, $2, $3, $4, $5, $6, $7) RETURNING *', [req.body.titel, req.body.jahr, req.body.minspieler, req.body.maxspieler, req.body.dauer, req.body.spieldesjahres, req.body.autor]);
+    console.log('Save spiel ID =' + JSON.stringify(response.rows[0].id));
     res.json(response.rows[0].id);
   }
   catch(e){
@@ -160,9 +156,40 @@ router.delete('/spiele/:id', async(req, res) => {
 });
 
 // Speichern des Bildes
-router.post('/saveimage', async(req, res) => {
-  console.log('saveimage: ' + JSON.stringify(req.body));
-  fs.writeFile('D:/Projekte/github/spiele/my-client/public/images/temp.jpg', req.body);
+//router.post('/saveimage', upload.single('cover'), async(req, res) => {
+router.post('/saveimage',  async(req, res) => {
+
+  if(req.body) {
+
+    var saveTo = 'D:/Daten/Projekte/github/spiele_local/my-client/public/images/spiel_';
+
+    var busboy = new Busboy({ headers: req.headers });
+    busboy.on('field', function(key, value){
+      console.log('field fired (key) ' + key);
+      console.log('field fired (value) ' + value);
+
+      saveTo += value;
+      saveTo += ".jpg";
+      console.log('field fired (saveTo)' + saveTo);
+    });
+    busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
+      console.log("busboy function: (fieldname) " + fieldname);
+      console.log("busboy function: (filename) " + filename);
+      console.log("busboy function: (encoding) " + encoding);
+      console.log("busboy function: (mimetype) " + mimetype);
+
+      file.pipe(fs.createWriteStream(saveTo));
+    });
+    busboy.on('finish', function() {
+      res.writeHead(200, { 'Connection': 'close' });
+      res.end("That's all folks!");
+    });
+    return req.pipe(busboy);
+
+    res.writeHead(404);
+    res.end();
+   }
+   else throw 'error';
 });
 
 // Hilfsfunktion zum Validieren des req.body

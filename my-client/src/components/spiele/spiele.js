@@ -49,24 +49,35 @@ export default class Spiele extends Component {
     this.setState({ show: false });
   }
 
-  attachSpiel = (neuesSpiel, neuesSpielId) => {
+  attachSpiel = (neuesSpiel) => {
+
+    console.log("attachSpiel " + window.neuesSpielId);
+
     var tempSpiel= {
-      id: 0,
-      titel: '',
-      autor: '',
-      minspieler: '',
-      maxspieler: '',
-      dauer: ''
+      id: window.neuesSpielId,
+      titel: neuesSpiel.titel,
+      autor: neuesSpiel.autor,
+      minspieler: neuesSpiel.minspieler,
+      maxspieler: neuesSpiel.maxspieler,
+      dauer: neuesSpiel.dauer
     };
 
-    tempSpiel.id = neuesSpielId;
-    tempSpiel.titel = neuesSpiel.titel;
-    tempSpiel.autor = neuesSpiel.autor;
-    tempSpiel.minspieler = neuesSpiel.minspieler;
-    tempSpiel.maxspieler = neuesSpiel.maxspieler;
-    tempSpiel.dauer = neuesSpiel.dauer;
-
     this.setState(({spiele}) => ({spiele: [...spiele, tempSpiel]}));
+
+    //sortiere die Spieleliste nach titel
+    this.state.spiele.sort(function(a, b) {
+      var nameA = a.titel.toUpperCase(); // Groﬂ-/Kleinschreibung ignorieren
+      var nameB = b.titel.toUpperCase(); // Groﬂ-/Kleinschreibung ignorieren
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // Namen m¸ssen gleich sein
+      return 0;
+    });
   }
 
   removeSpiel = (spielToRemove) => {

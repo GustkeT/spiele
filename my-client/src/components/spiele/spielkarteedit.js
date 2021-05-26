@@ -35,7 +35,7 @@ export default class SpielKarteEdit extends Component {
         uploading: false,
         images: [],
         selectedFile: null,
-        isOpen: false
+        isOpen: false //Dieses flag wird für das "Löschen bestätigen"-Modal verwendet
       };
 
       // This binding is necessary to make `this` work in the callback
@@ -212,17 +212,17 @@ export default class SpielKarteEdit extends Component {
               </Row>
             </Container>
           </div>
-          <Modal show={this.state.isOpen} onHide={this.closeModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Spiel löschen</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Möchtest Du das Spiel wirklich löschen?</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleDelete}>Ja</Button>
-              <Button variant="secondary" onClick={this.closeModal}>Nein</Button>
-            </Modal.Footer>
-          </Modal>
         </div>
+        <Modal show={this.state.isOpen} onHide={this.closeModal} size="sm">
+          <Modal.Header closeButton>
+            <Modal.Title>Spiel löschen</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Möchtest Du das Spiel wirklich löschen?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleDelete}>Ja</Button>
+            <Button variant="secondary" onClick={this.closeModal}>Nein</Button>
+          </Modal.Footer>
+        </Modal>
       </React.Fragment>
       );
     }

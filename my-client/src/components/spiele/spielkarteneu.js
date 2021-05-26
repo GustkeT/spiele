@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {saveSpiel} from '../../services/SpieleService.js';
 import {saveImage} from '../../services/SpieleService.js';
-
 import { Image, ButtonToolbar, ButtonGroup, Button, Form, FormGroup, FormControl, Container, Row, Col} from 'react-bootstrap';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave, faTimes } from '@fortawesome/free-solid-svg-icons'
 library.add(faEdit, faTrash, faUserFriends, faClock, faUndo, faBan, faSave, faTimes)
-
 
 export default class SpielKarteNeu extends Component {
 
@@ -21,13 +19,10 @@ export default class SpielKarteNeu extends Component {
           autor: '',
           minspieler: '',
           maxspieler: '',
-          dauer: ''
+          dauer: '',
+          imageFile: null
         },
-        isLoading: true,
-        neuesSpielId: 0,
-        uploading: false,
-        images: [],
-        selectedFile: null,
+        selectedFile: null
       };
 
       // This binding is necessary to make `this` work in the callback
@@ -44,58 +39,57 @@ export default class SpielKarteNeu extends Component {
     console.log("showOpenFileDlg end");
   }
 
-  onChange = (e) => {
-    console.log("onChange start");
-    this.setState({
-      selectedFile: e.target.files[0]
-    });
+  onSelectFile = (e) => {
+    if (e.target.files && e.target.files[0]) {
 
-    const files = Array.from(e.target.files);
-    console.log('files array: '+ files);
+      // speichere das handle des bildes wenn es ausgewählt ist
+      // das neueSpiel temporär speichern
+      var neuesSpielTemp = {...this.state.neuesSpiel}
 
-    this.setState({ uploading: true });
-    console.log(e.target.files[0]);
+      // das bild in die neueSpiel Struktur speichern
+      neuesSpielTemp.imageFile = e.target.files[0];
+      this.setState({neuesSpiel: neuesSpielTemp});
 
+      console.log("neuesSpiel mit imageFile " + this.state.neuesSpiel);
 
-    const formData = new FormData();
-
-    files.forEach((file, i) => {
-      formData.append(i, file)
-    });
-
-    saveImage(formData);
-    console.log(formData);
-
-    console.log("onChange end");
-  }
-
-  reloadSpiel(){
-    var tempSpiel = this.state.neuesSpiel;
-    //neuesSpiel in der Liste anhängen
-    this.props.attachSpiel(tempSpiel, this.state.neuesSpielId);
-    //SpielKarteNeu wieder schließen
-    this.props.hideModal();
-    this.setState({isLoading : true});
-
-    //Reset state
-    this.state.neuesSpiel.titel = '';
-    this.state.neuesSpiel.autor = '';
-    this.state.neuesSpiel.minspieler = '';
-    this.state.neuesSpiel.maxspieler = '';
-    this.state.neuesSpiel.dauer = '';
+      // lade das bild
+      let reader = new FileReader();
+      reader.onload = (event) => {
+        this.setState({selectedFile: event.target.result});
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
   }
 
   handleSave(e){
+    const wait=ms=>new Promise(resolve => setTimeout(resolve, ms));
+
+    console.log('handleSave - neuesSpiel', this.state.neuesSpiel);
+
+    // bereite die formData vor
+    const formData = new FormData();
+    formData.append('titel', this.state.neuesSpiel.titel);
+    formData.append('autor', this.state.neuesSpiel.autor);
+    formData.append('minspieler', this.state.neuesSpiel.minspieler);
+    formData.append('maxspieler', this.state.neuesSpiel.maxspieler);
+    formData.append('dauer', this.state.neuesSpiel.dauer);
+    formData.append('imageFile', this.state.neuesSpiel.imageFile);
+
     //neues Spiel speichern in der DB
-    saveSpiel(this.state.neuesSpiel)
-    .then( data => {this.setState({
-        neuesSpielId: data,
-        isLoading : false,
-      })
-    })
-    .catch(
-      error => this.setState({error, isLoading: false})
-    )
+    saveSpiel(formData)
+
+    //mit dem wait(1000) warten wir 1 Sekunde befvor wir das neue Spiel in die
+    //Liste anhängen, weil wir sonst die ID des neuen Spiels nicht haben
+    wait(1000).then(() => {
+        console.log("waited for 1 second");
+        throw new Error("error occurred");
+    }).catch(() => {
+      //neuse Spiel in die vorhandene SpieleListe anhängen
+      this.props.attachSpiel(this.state.neuesSpiel);
+
+      //Schliesse das modal
+      this.props.hideModal();
+    });
   }
 
   handleCancel(e){
@@ -105,6 +99,7 @@ export default class SpielKarteNeu extends Component {
     this.state.neuesSpiel.minspieler = '';
     this.state.neuesSpiel.maxspieler = '';
     this.state.neuesSpiel.dauer = '';
+    this.state.neuesSpiel.imageFile = null;
 
     this.props.hideModal();
   }
@@ -126,17 +121,14 @@ export default class SpielKarteNeu extends Component {
   }
 
   render() {
-    const { isLoading, error } = this.state;
-
     return(
       <React.Fragment>
-      {!isLoading ? (
-        this.reloadSpiel()
-      ) : (console.log('Loading...'))}
 
         <div className="spiel-card-neu">
             <div>
-              <input ref={this.inputOpenFileRef} type="file" accept=".jpg" style={{display:"none"}} onChange={this.onChange}/>
+              <input ref={this.inputOpenFileRef} type="file" accept="image/*" name="cover" style={{display:"none"}} onChange={this.onSelectFile}/>
+
+              {/* x-Button in Toolbar zum Schliessen des Fensters */}
               <div>
                 <ButtonToolbar className="float-right">
                   <ButtonGroup>
@@ -146,57 +138,58 @@ export default class SpielKarteNeu extends Component {
                   </ButtonGroup>
                 </ButtonToolbar>
               </div>
+
               <Image onClick={this.showOpenFileDlg} className="card-img-top"
-                //src={"../images/spiel_0.jpg"} responsive />
-                src={this.state.selectedFile == null ? "../images/spiel_0.jpg" : "../images/temp.jpg"} responsive />
-                <div className="spiel-card-body card-body ">
-                  <Form>
-                    <FormGroup>
-                      <FormControl
-                        type="text"
-                        placeholder="Titel"
-                        value={this.state.neuesSpiel.titel}
-                        onChange={e => this.handleChange(e, "titel")}
-                      />
-                      <FormControl
-                        type="text"
-                        placeholder="Autor"
-                        value={this.state.neuesSpiel.autor}
-                        onChange={e => this.handleChange(e,"autor")}
-                      />
-                      <FormControl
-                        type="text"
-                        pattern="[0-9]*"
-                        placeholder="Mitspieler min"
-                        value={this.state.neuesSpiel.minspieler}
-                        onChange={e => this.handleChange(e,"minspieler")}
-                      />
-                      <FormControl
-                        type="text"
-                        pattern="[0-9]*"
-                        placeholder="Mitspieler max"
-                        value={this.state.neuesSpiel.maxspieler}
-                        onChange={e => this.handleChange(e,"maxspieler")}
-                      />
-                      <FormControl
-                        type="text"
-                        pattern="[0-9]*"
-                        placeholder="Dauer"
-                        value={this.state.neuesSpiel.dauer}
-                        onChange={e => this.handleChange(e,"dauer")}
-                      />
-                    </FormGroup>
-                  </Form>
-                </div>
-                <div className="spiel-card-edit-footer" align="center">
-                  <Container>
-                    <Row className="justify-content-md-center">
-                      <Col xs lg="2">
-                        <Button onClick={this.handleSave}>Speichern</Button>
-                      </Col>
-                    </Row>
-                  </Container>
-                </div>
+                src={this.state.selectedFile == null ? "../images/spiel_0.jpg" : this.state.selectedFile} responsive />
+
+              <div className="spiel-card-body card-body ">
+                <Form>
+                  <FormGroup>
+                    <FormControl
+                      type="text"
+                      placeholder="Titel"
+                      value={this.state.neuesSpiel.titel}
+                      onChange={e => this.handleChange(e, "titel")}
+                    />
+                    <FormControl
+                      type="text"
+                      placeholder="Autor"
+                      value={this.state.neuesSpiel.autor}
+                      onChange={e => this.handleChange(e,"autor")}
+                    />
+                    <FormControl
+                      type="text"
+                      pattern="[0-9]*"
+                      placeholder="Mitspieler min"
+                      value={this.state.neuesSpiel.minspieler}
+                      onChange={e => this.handleChange(e,"minspieler")}
+                    />
+                    <FormControl
+                      type="text"
+                      pattern="[0-9]*"
+                      placeholder="Mitspieler max"
+                      value={this.state.neuesSpiel.maxspieler}
+                      onChange={e => this.handleChange(e,"maxspieler")}
+                    />
+                    <FormControl
+                      type="text"
+                      pattern="[0-9]*"
+                      placeholder="Dauer"
+                      value={this.state.neuesSpiel.dauer}
+                      onChange={e => this.handleChange(e,"dauer")}
+                    />
+                  </FormGroup>
+                </Form>
+              </div>
+              <div className="spiel-card-edit-footer" align="center">
+                <Container>
+                  <Row className="justify-content-md-center">
+                    <Col xs lg="2">
+                      <Button onClick={this.handleSave}>Speichern</Button>
+                    </Col>
+                  </Row>
+                </Container>
+              </div>
             </div>
         </div>
       </React.Fragment>
