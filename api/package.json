@@ -7,13 +7,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
+  "repository": {
+    "type": "git",
+	"url": "git://github.com/gustket/spiele.git"
+  }
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
     "body-parser": "^1.18.3",
+    "busboy": "^0.3.1",
     "cors": "^2.8.4",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "form-data": "^4.0.0",
     "joi": "^13.7.0",
     "path": "^0.12.7",
     "pg": "^7.4.3"
