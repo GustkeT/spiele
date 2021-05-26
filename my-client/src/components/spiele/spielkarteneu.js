@@ -80,8 +80,8 @@ export default class SpielKarteNeu extends Component {
 
     //mit dem wait(1000) warten wir 1 Sekunde befvor wir das neue Spiel in die
     //Liste anhängen, weil wir sonst die ID des neuen Spiels nicht haben
-    wait(1000).then(() => {
-        console.log("waited for 1 second");
+    wait(2000).then(() => {
+        console.log("waited for 2 seconds");
         throw new Error("error occurred");
     }).catch(() => {
       //neuse Spiel in die vorhandene SpieleListe anhängen
