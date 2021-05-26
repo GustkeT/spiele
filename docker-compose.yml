@@ -14,7 +14,7 @@ services:
       # copy the sql script to fill tables
       - ./database/spiele_fill_tables.sql:/docker-entrypoint-initdb.d/spiele_fill_tables.sql
     ports:
-      - "5432:5432"
+      - "5433:5432"
   api:
     image: spiele-api
     container_name: spiele-api-container
