@@ -10,7 +10,7 @@
   "repository": {
     "type": "git",
 	"url": "git://github.com/gustket/spiele.git"
-  }
+  },
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
