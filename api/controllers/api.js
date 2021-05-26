@@ -161,7 +161,7 @@ router.post('/saveimage',  async(req, res) => {
 
   if(req.body) {
 
-    var saveTo = 'D:/Daten/Projekte/github/spiele_local/my-client/public/images/spiel_';
+    var saveTo = './images/spiel_';
 
     var busboy = new Busboy({ headers: req.headers });
     busboy.on('field', function(key, value){
