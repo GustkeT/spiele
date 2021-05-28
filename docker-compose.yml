@@ -18,6 +18,8 @@ services:
   api:
     image: spiele-api
     container_name: spiele-api-container
+    volumes:
+      - image-volume:/app/public/images
     depends_on:
       - db
     ports:
@@ -26,10 +28,12 @@ services:
     image: spiele-client
     container_name: spiele-client-container
     volumes:
-      - ./my-client/public/images:/app/public/images
+      - image-volume:/app/public/images
     depends_on:
       - api
     ports:
       - "8091:8091"
     links:
       - api
+volumes:
+  image-volume:
