@@ -19,6 +19,9 @@ Mit `npm start` Client starten.
 Im Standard-Browser öffnet sich die App.
 
 ## Docker-Installation auf DiskStation
+
+![overview](https://github.com/GustkeT/spiele/blob/master/Spiele.jpg)
+
 Als admin via PuTTY auf DiskStation einloggen und zum Verzeichnis "spiele" wechseln:
 ```
 >pwd
