@@ -7,16 +7,19 @@ var fs = require('fs'); // Schreiben ins FileSystem
 var Busboy = require('busboy');
 
 // Die Konfiguration der DB
-var config = {
-  host:'spiele-db-container',
-  user:'spieler',
-  password:'spiel',
-  database:'spiele',
-  port:5432,
-  dialect:"postgres"
-};
+// var config = {
+//   host:'spiele-db-container',
+//   user:'spieler',
+//   password:'spiel',
+//   database:'spiele',
+//   port:5432,
+//   dialect:"postgres"
+// };
 
-var pool = new Pool(config);
+// config variables
+const config = require('./config/config.js');
+
+var pool = new Pool(global.gConfig);
 
 // Definiere die API route "/spiele" und mappe den GET request auf den SQL-Befehl
 // Holle die Liste aller Spiele aus der DB

@@ -1,0 +1,15 @@
+{
+    development: {
+        config_id: 'development',
+        host:'localhost',
+        user:'spieler',
+        password:'spiel',
+        database:'spiele',
+        port:5433
+    },
+    production: {
+        config_id: 'production',
+        host:'spiele-db-container',
+        port:5432
+    }
+}
