@@ -17,7 +17,7 @@ var Busboy = require('busboy');
 // };
 
 // config variables
-const config = require('./config/config.js');
+const config = require('../config/config.js');
 
 var pool = new Pool(global.gConfig);
 
